@@ -1,0 +1,61 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ProjectCard from '../ui/ProjectCard.astro';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+
+const projects = [
+  {
+    title: 'KimStore 2.0 / StanStore',
+    description: 'Proyecto tipo tienda en línea creado para practicar desarrollo full-stack. Incluye una parte visual para usuarios y una parte backend para manejar datos, autenticación y lógica del sistema.',
+    learned: 'Aprendí a conectar frontend con backend, trabajar con bases de datos, rutas protegidas y estructura de una plataforma e-commerce.',
+    tags: ['Java', 'Spring Boot', 'Astro', 'TypeScript', 'Tailwind CSS', 'JWT', 'Bases de Datos'],
+    githubUrl: 'https://github.com/KimJesus22/StanStore',
+  },
+  {
+    title: 'StageFront Tickets',
+    description: 'Proyecto enfocado en la gestión y distribución de boletos para eventos.',
+    learned: 'Aprendí a estructurar una plataforma pensada para usuarios, eventos, entradas y organización de información.',
+    tags: ['Next.js', 'TypeScript', 'Bases de Datos'],
+    githubUrl: 'https://github.com/KimJesus22/StageFront-Tickets',
+  },
+  {
+    title: 'BTS Lore Archive',
+    description: 'Aplicación web interactiva para organizar contenido relacionado con el lore de BTS de forma visual y ordenada.',
+    learned: 'Aprendí a crear una experiencia web temática, trabajar con componentes, organización de contenido, diseño visual y despliegue en Vercel.',
+    tags: ['Astro', 'TypeScript', 'Vercel'],
+    demoUrl: 'https://bts-lore-archive.vercel.app/',
+  },
+  {
+    title: 'Conversor de Moneda',
+    description: 'Aplicación en Java que consulta datos externos para convertir divisas.',
+    learned: 'Aprendí a consumir APIs, procesar respuestas JSON y aplicar lógica de programación a datos reales.',
+    tags: ['Java', 'API REST', 'JSON'],
+  },
+  {
+    title: 'Literalura Challenge',
+    description: 'Desafío técnico en Java para practicar lógica, estructuras de datos y organización de código.',
+    learned: 'Me ayudó a reforzar fundamentos de programación y resolución de problemas.',
+    tags: ['Java', 'Lógica', 'Algoritmos'],
+  },
+];
+---
+
+<section id="projects" class="bg-background py-24">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading badge={t('projects.badge')} title={t('projects.title')} subtitle={t('projects.subtitle')} />
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12">
+      {projects.map((proj, i) => (
+        <div class="reveal h-full" style={`transition-delay: ${i * 0.1}s`}>
+          <ProjectCard {...proj} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

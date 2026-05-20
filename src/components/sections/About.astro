@@ -1,0 +1,77 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props { lang?: Lang; }
+const { lang = 'es' } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="about" class="bg-background py-24">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading badge={t('about.badge')} title="Sobre mí" />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mt-12">
+      <!-- Photo -->
+      <div class="lg:col-span-5 reveal">
+        <div class="relative max-w-md mx-auto lg:mx-0">
+          <div class="aspect-square rounded-[2rem] bg-gradient-to-br from-primary/10 to-accent/10 overflow-hidden border border-border shadow-xl">
+            <!-- Real Avatar -->
+            <img src="/perfil.jpg" alt="José de Jesús Cerón López" class="w-full h-full object-cover" />
+          </div>
+          <!-- Decorative elements -->
+          <div class="absolute -bottom-6 -right-6 w-32 h-32 rounded-[2rem] bg-accent/10 -z-10"></div>
+          <div class="absolute -top-6 -left-6 w-24 h-24 rounded-2xl bg-primary/10 -z-10"></div>
+        </div>
+      </div>
+
+      <!-- Text -->
+      <div class="lg:col-span-7 reveal" style="transition-delay: 0.15s">
+        <div class="space-y-6 text-text-body leading-relaxed text-[1.1rem]">
+          <p>
+            Soy <strong class="text-text-heading font-semibold">José de Jesús Cerón López</strong>, de Jaral del Progreso, Guanajuato. 
+            Actualmente soy estudiante de Ingeniería en Sistemas Computacionales en UTEL.
+          </p>
+          <p>
+            Me gusta crear páginas web, hacer laboratorios de ciberseguridad, aprender con IA, 
+            escuchar música, jugar videojuegos y resolver problemas tecnológicos.
+          </p>
+          <p>
+            Trabajé en <strong>Ciber La Red</strong> de 2020 a 2025, donde muchas personas de la zona me conocen por atención al cliente, 
+            soporte y mantenimiento de equipos. También trabajé con <strong>Icorp</strong> dando soporte en campo a tiendas OXXO. 
+            Actualmente trabajo en <strong>Zona Zero</strong> apoyando en Kioscos Digitales GTO dentro de OXXO, ayudando a ciudadanos con trámites digitales.
+          </p>
+          
+          <!-- Mensaje Clave -->
+          <div class="bg-primary/5 border-l-4 border-primary p-6 rounded-r-2xl my-8 shadow-sm">
+            <p class="text-primary font-medium text-xl italic leading-relaxed">
+              "La tecnología no debería sentirse complicada. Me gusta explicar con paciencia 
+              y ayudar a que las personas entiendan lo que están haciendo."
+            </p>
+          </div>
+        </div>
+
+        <!-- Bloque de confianza -->
+        <div class="mt-10 bg-surface border border-border p-8 rounded-2xl">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              "Experiencia con usuarios reales",
+              "Soporte presencial y remoto",
+              "Proyectos web propios",
+              "Estudiante de ingeniería",
+              "Enfoque en soluciones prácticas"
+            ].map(item => (
+              <div class="flex items-center gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold">✓</span>
+                <span class="text-text-heading font-medium text-sm">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

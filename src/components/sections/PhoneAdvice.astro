@@ -1,0 +1,71 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const reviewPoints = [
+  "Presupuesto",
+  "Uso principal: WhatsApp, escuela, trabajo, fotos, redes, juegos o negocio",
+  "RAM",
+  "Almacenamiento",
+  "Procesador",
+  "Batería",
+  "Actualizaciones",
+  "Garantía",
+  "Si conviene comprar local, en línea, usado o nuevo"
+];
+---
+
+<section id="phone-advice" class="bg-surface py-24 border-t border-border/50">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Asesoría Especializada"
+        title="Asesoría para comprar celular"
+        subtitle="Encuentra el equipo ideal sin pagar de más."
+      />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mt-12">
+      <!-- Text & Example -->
+      <div class="reveal space-y-6 text-text-body text-[1.1rem] leading-relaxed">
+        <p class="text-text-heading font-medium text-xl">
+          "No compres solo por marca, cámara o memoria. Te ayudo a elegir un celular según tu presupuesto, uso real y características importantes."
+        </p>
+
+        <div class="bg-background border border-border p-6 rounded-2xl">
+          <h4 class="font-semibold text-text-heading mb-2">Por ejemplo:</h4>
+          <p class="text-[0.95rem] italic text-text-body/90">
+            "Si solo encuentras modelos de 128 GB en tiendas locales pero necesitas 256 GB, puedo ayudarte a buscar opciones más convenientes y seguras."
+          </p>
+        </div>
+
+        <div class="bg-primary/10 border border-primary/20 rounded-xl p-6">
+          <p class="text-primary font-medium flex items-start gap-3">
+            <span class="text-xl">⚠️</span>
+            <span>No vendo celulares directamente. Te asesoro para que tomes una mejor decisión.</span>
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <a href="#quote?service=Asesoría%20para%20comprar%20celular" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-medium rounded-lg hover:opacity-90 transition-opacity">
+            Solicitar asesoría
+          </a>
+        </div>
+      </div>
+
+      <!-- Checklist -->
+      <div class="reveal" style="transition-delay: 0.2s">
+        <div class="bg-background rounded-[2rem] p-8 lg:p-10 border border-border shadow-sm">
+          <h3 class="text-xl font-bold mb-6 text-text-heading">¿Qué revisamos juntos?</h3>
+          <ul class="space-y-4">
+            {reviewPoints.map((point) => (
+              <li class="flex items-start gap-3">
+                <span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-sm font-bold mt-0.5">✓</span>
+                <span class="text-text-heading font-medium text-[0.95rem]">{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

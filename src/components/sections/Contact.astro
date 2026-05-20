@@ -1,0 +1,48 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="contact" class="bg-background">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading badge={t('contact.badge')} title={t('contact.title')} subtitle={t('contact.subtitle')} />
+    </div>
+
+    <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Email -->
+      <div class="reveal card p-6 text-center group">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          ✉️
+        </div>
+        <h3 class="font-display font-semibold text-text-heading mb-2">{t('contact.email')}</h3>
+        <a href="mailto:joseceron685@gmail.com" class="text-primary hover:text-primary-dark transition-colors text-sm">
+          joseceron685@gmail.com
+        </a>
+      </div>
+
+      <!-- Telegram -->
+      <div class="reveal card p-6 text-center group" style="transition-delay: 0.1s">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-50 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          📨
+        </div>
+        <h3 class="font-display font-semibold text-text-heading mb-2">{t('contact.telegram')}</h3>
+        <a href="https://t.me/KimJesus21" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-primary-dark transition-colors text-sm">
+          @KimJesus21
+        </a>
+      </div>
+    </div>
+
+    <!-- Hours -->
+    <div class="reveal text-center mt-8">
+      <p class="text-sm text-text-muted">
+        🕐 {t('contact.hours')}
+      </p>
+    </div>
+  </div>
+</section>

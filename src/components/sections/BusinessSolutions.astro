@@ -1,0 +1,101 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const services = [
+  "WhatsApp Business",
+  "Catálogo de productos",
+  "Menú digital",
+  "Código QR",
+  "Página web sencilla",
+  "Google Maps",
+  "Plantillas básicas para publicaciones",
+  "Organización de pedidos",
+  "Asesoría para usar IA en textos, promociones o respuestas"
+];
+
+const packages = [
+  {
+    title: "Paquete Básico Digital",
+    description: "WhatsApp Business + QR + catálogo básico",
+    icon: "📱"
+  },
+  {
+    title: "Paquete Menú Digital",
+    description: "Menú en línea + QR + botón de WhatsApp",
+    icon: "🍽️"
+  },
+  {
+    title: "Paquete Web Sencilla",
+    description: "Página informativa con servicios, fotos, ubicación y contacto",
+    icon: "🌐"
+  }
+];
+---
+
+<section id="business-solutions" class="bg-surface py-24 border-t border-border/50">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Para Negocios"
+        title="Soluciones para negocios pequeños"
+        subtitle="Especial para negocios de comida, tiendas, revendedores, servicios locales, estéticas, barberías y negocios familiares."
+      />
+    </div>
+
+    <div class="mt-12 space-y-16">
+      
+      <!-- Intro & Services -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="reveal space-y-6">
+          <p class="text-text-heading font-medium text-2xl leading-snug">
+            "Te ayudo a que tu negocio se vea más claro y profesional en internet, sin complicarte con tecnología."
+          </p>
+
+          <div class="bg-primary/10 border border-primary/20 rounded-xl p-6 shadow-sm">
+            <p class="text-primary font-medium flex items-start gap-3">
+              <span class="text-xl">💡</span>
+              <span>No necesitas saber de tecnología. Yo te explico paso a paso y dejo todo listo para que puedas usarlo.</span>
+            </p>
+          </div>
+
+          <div class="pt-4">
+            <a href="#quote?service=Soluciones%20para%20negocios" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-medium rounded-lg hover:opacity-90 transition-opacity">
+              Cotizar para mi negocio
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal" style="transition-delay: 0.1s">
+          <div class="bg-background rounded-[2rem] p-8 border border-border shadow-sm">
+            <h3 class="text-xl font-bold mb-6 text-text-heading">¿En qué te puedo ayudar?</h3>
+            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {services.map((service) => (
+                <li class="flex items-start gap-2">
+                  <span class="text-primary mt-1 flex-shrink-0 font-bold">✓</span>
+                  <span class="text-text-body text-[0.95rem] font-medium">{service}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Packages -->
+      <div class="reveal" style="transition-delay: 0.2s">
+        <h3 class="text-2xl font-bold text-center mb-8 text-text-heading">Paquetes Orientativos</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {packages.map((pkg) => (
+            <div class="bg-background border border-border rounded-2xl p-8 text-center hover:border-primary/30 transition-colors shadow-sm">
+              <div class="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-5 text-2xl">
+                {pkg.icon}
+              </div>
+              <h4 class="text-lg font-bold text-text-heading mb-3">{pkg.title}</h4>
+              <p class="text-text-body text-[0.95rem] leading-relaxed">{pkg.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>

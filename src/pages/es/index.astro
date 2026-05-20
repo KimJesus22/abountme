@@ -1,0 +1,34 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Services from '../../components/sections/Services.astro';
+import PhoneAdvice from '../../components/sections/PhoneAdvice.astro';
+import Hardware from '../../components/sections/Hardware.astro';
+import BusinessSolutions from '../../components/sections/BusinessSolutions.astro';
+import Projects from '../../components/sections/Projects.astro';
+import About from '../../components/sections/About.astro';
+import Experience from '../../components/sections/Experience.astro';
+import ServiceAreas from '../../components/sections/ServiceAreas.astro';
+import QuoteForm from '../../components/sections/QuoteForm.astro';
+import Contact from '../../components/sections/Contact.astro';
+
+const lang = 'es';
+---
+
+<MainLayout 
+  lang={lang}
+  title="JC21 Labs — Tecnología Clara para Personas y Negocios Reales"
+  description="Soluciones tecnológicas para personas y pequeños negocios. Soporte técnico, páginas web, seguridad digital y más. De Jaral del Progreso para todo México."
+>
+  <Hero lang={lang} />
+  <Services lang={lang} />
+  <PhoneAdvice />
+  <Hardware lang={lang} />
+  <BusinessSolutions />
+  <Projects lang={lang} />
+  <About lang={lang} />
+  <Experience lang={lang} />
+  <ServiceAreas lang={lang} />
+  <QuoteForm lang={lang} />
+  <Contact lang={lang} />
+</MainLayout>

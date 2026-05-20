@@ -1,0 +1,91 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import type { Lang } from "../../i18n/ui";
+import SectionHeading from "../ui/SectionHeading.astro";
+import ServiceCard from "../ui/ServiceCard.astro";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = "en" } = Astro.props;
+const t = useTranslations(lang);
+
+const services = [
+  {
+    icon: "📱",
+    value: "buy-phone",
+    titleKey: "services.1.title",
+    descKey: "services.1.desc",
+  },
+  {
+    icon: "⚙️",
+    value: "setup-phone",
+    titleKey: "services.2.title",
+    descKey: "services.2.desc",
+  },
+  {
+    icon: "🔧",
+    value: "tech-support",
+    titleKey: "services.3.title",
+    descKey: "services.3.desc",
+  },
+  {
+    icon: "🖥️",
+    value: "pc-build",
+    titleKey: "services.4.title",
+    descKey: "services.4.desc",
+  },
+  {
+    icon: "💻",
+    value: "laptop-advice",
+    titleKey: "services.5.title",
+    descKey: "services.5.desc",
+  },
+  {
+    icon: "🌐",
+    value: "simple-web",
+    titleKey: "services.6.title",
+    descKey: "services.6.desc",
+  },
+  {
+    icon: "🏪",
+    value: "business-digital",
+    titleKey: "services.7.title",
+    descKey: "services.7.desc",
+  },
+  {
+    icon: "🛡️",
+    value: "basic-security",
+    titleKey: "services.8.title",
+    descKey: "services.8.desc",
+  },
+];
+---
+
+<section id="services" class="bg-background">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge={t("services.badge")}
+        title={t("services.title")}
+        subtitle={t("services.subtitle")}
+      />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {
+        services.map((svc, i) => (
+          <div class="reveal" style={`transition-delay: ${(i % 4) * 0.1}s`}>
+            <ServiceCard
+              icon={svc.icon}
+              value={svc.value}
+              title={t(svc.titleKey as any)}
+              description={t(svc.descKey as any)}
+              lang={lang}
+            />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,65 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import type { Lang } from "../../i18n/ui";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = "es" } = Astro.props;
+
+const services = [
+  "Orientación para armar PC por presupuesto",
+  "Revisión de compatibilidad de componentes",
+  "Mejora de RAM y almacenamiento",
+  "Revisión de laptops usadas antes de comprar",
+  "Recomendaciones para estudiar, trabajar, jugar o uso básico",
+  "Instalación/configuración de software básico"
+];
+---
+
+<section id="hardware" class="bg-surface py-24">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Hardware"
+        title="PCs, laptops y mejoras"
+        subtitle="Servicios de armado, asesoría y mejora de equipos"
+      />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-12">
+      <div class="reveal space-y-6">
+        <p class="text-text/80 text-lg leading-relaxed">
+          También puedo ayudarte si quieres armar una PC, mejorar una laptop o revisar si un equipo usado conviene. Yo mismo he armado una PC gamer eligiendo componentes en DDTech y también he comprado una laptop usada en Marketplace para mejorarla: pasé de 8 GB a 16 GB de RAM y de un SSD de 256 GB a uno de 1 TB.
+        </p>
+        
+        <div class="bg-primary/10 border border-primary/20 rounded-xl p-6">
+          <p class="text-primary font-medium flex items-start gap-3">
+            <span class="text-xl">⚠️</span>
+            <span>No vendo componentes directamente. Te ayudo a elegir mejor y evitar compras innecesarias o incompatibles.</span>
+          </p>
+        </div>
+
+        <div class="pt-4">
+          <a href="#quote" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-medium rounded-lg hover:opacity-90 transition-opacity">
+            Cotizar mejora o armado
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal" style="transition-delay: 0.2s">
+        <div class="bg-background rounded-2xl p-8 border border-border shadow-sm">
+          <h3 class="text-xl font-bold mb-6">Servicios incluidos:</h3>
+          <ul class="space-y-4">
+            {services.map((service) => (
+              <li class="flex items-start gap-3">
+                <span class="text-primary mt-1">✓</span>
+                <span class="text-text/90">{service}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

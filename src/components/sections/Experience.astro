@@ -1,0 +1,53 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+
+const experiences = [
+  { icon: '🔧', titleKey: 'exp.support.title', descKey: 'exp.support.desc' },
+  { icon: '🏪', titleKey: 'exp.oxxo.title', descKey: 'exp.oxxo.desc' },
+  { icon: '🖥️', titleKey: 'exp.kioscos.title', descKey: 'exp.kioscos.desc' },
+  { icon: '💻', titleKey: 'exp.web.title', descKey: 'exp.web.desc' },
+  { icon: '🛡️', titleKey: 'exp.cyber.title', descKey: 'exp.cyber.desc' },
+];
+---
+
+<section id="experience">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading badge={t('exp.badge')} title={t('exp.title')} subtitle={t('exp.subtitle')} />
+    </div>
+
+    <div class="max-w-3xl mx-auto">
+      <div class="relative">
+        <!-- Timeline line -->
+        <div class="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/50 to-transparent hidden md:block"></div>
+
+        {experiences.map((exp, i) => (
+          <div class="reveal flex gap-6 mb-8 last:mb-0" style={`transition-delay: ${i * 0.1}s`}>
+            <!-- Icon -->
+            <div class="relative z-10 flex-shrink-0">
+              <div class="w-12 h-12 rounded-2xl bg-surface border-2 border-primary/20 flex items-center justify-center text-xl shadow-sm">
+                {exp.icon}
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="card p-5 flex-1">
+              <h3 class="font-display font-semibold text-text-heading mb-1">
+                {t(exp.titleKey)}
+              </h3>
+              <p class="text-sm text-text-body leading-relaxed">
+                {t(exp.descKey)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

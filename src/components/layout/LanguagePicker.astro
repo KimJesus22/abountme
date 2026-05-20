@@ -1,0 +1,55 @@
+---
+import { languages, type Lang } from '../../i18n/ui';
+import { getLocalizedPath } from '../../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+
+const { lang = 'en' } = Astro.props;
+
+const flags: Record<Lang, string> = {
+  en: '🇺🇸',
+  es: '🇲🇽',
+  ko: '🇰🇷',
+  ja: '🇯🇵',
+};
+---
+
+<div class="relative" id="lang-picker">
+  <button id="lang-picker-btn" class="flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-text-body rounded-lg hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/10">
+    <span>{flags[lang]}</span>
+    <span class="uppercase">{lang}</span>
+    <svg class="w-3.5 h-3.5 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </button>
+  <div id="lang-dropdown" class="hidden absolute right-0 top-full mt-1 bg-surface rounded-xl shadow-lg border border-white/10 overflow-hidden min-w-[140px] animate-slide-down">
+    {Object.entries(languages).map(([code, name]) => (
+      <a
+        href={getLocalizedPath(code as Lang, '/')}
+        class:list={[
+          'flex items-center gap-2 px-4 py-2.5 text-sm hover:bg-primary/10 transition-colors',
+          code === lang ? 'text-primary font-semibold bg-primary/10/50' : 'text-text-body',
+        ]}
+      >
+        <span>{flags[code as Lang]}</span>
+        <span>{name}</span>
+      </a>
+    ))}
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('lang-picker-btn')!;
+  const dropdown = document.getElementById('lang-dropdown')!;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle('hidden');
+  });
+
+  document.addEventListener('click', () => {
+    dropdown.classList.add('hidden');
+  });
+</script>

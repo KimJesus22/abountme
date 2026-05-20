@@ -1,0 +1,28 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Services from '../../components/sections/Services.astro';
+import Projects from '../../components/sections/Projects.astro';
+import About from '../../components/sections/About.astro';
+import Experience from '../../components/sections/Experience.astro';
+import ServiceAreas from '../../components/sections/ServiceAreas.astro';
+import QuoteForm from '../../components/sections/QuoteForm.astro';
+import Contact from '../../components/sections/Contact.astro';
+
+const lang = 'ja';
+---
+
+<MainLayout 
+  lang={lang}
+  title="JC21 Labs — 人とビジネスのための明確なテクノロジー"
+  description="人と中小企業のための技術ソリューション。技術サポート、ウェブサイト、デジタルセキュリティなど。メキシコ全土対応。"
+>
+  <Hero lang={lang} />
+  <Services lang={lang} />
+  <Projects lang={lang} />
+  <About lang={lang} />
+  <Experience lang={lang} />
+  <ServiceAreas lang={lang} />
+  <QuoteForm lang={lang} />
+  <Contact lang={lang} />
+</MainLayout>

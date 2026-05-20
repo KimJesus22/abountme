@@ -1,0 +1,85 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<section id="hero" class="relative min-h-[90vh] flex items-center overflow-hidden">
+  <!-- Background blobs -->
+  <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+  <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+
+  <div class="section-container relative z-10 pt-20">
+    <div class="max-w-3xl mx-auto text-center lg:text-left lg:mx-0">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-primary/10 rounded-full border border-primary/10 mb-6 animate-fade-in">
+        <span class="w-2 h-2 rounded-full bg-success animate-pulse"></span>
+        <span class="text-sm font-medium text-primary">JC21 Labs</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-bold text-text-heading leading-tight animate-slide-up" style="animation-delay: 0.1s">
+        {t('hero.title')}
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="mt-6 text-lg md:text-xl text-text-body max-w-2xl leading-relaxed animate-slide-up" style="animation-delay: 0.2s">
+        {t('hero.subtitle')}
+      </p>
+
+      <!-- Secondary Text -->
+      <p class="mt-4 text-base md:text-lg text-text-muted max-w-2xl leading-relaxed animate-slide-up" style="animation-delay: 0.25s">
+        {t('hero.desc')}
+      </p>
+
+      <!-- CTAs -->
+      <div class="mt-8 flex flex-col sm:flex-row flex-wrap gap-4 justify-center lg:justify-start animate-slide-up" style="animation-delay: 0.3s">
+        <a href="#quote" class="btn-primary text-base">
+          {t('hero.cta1')}
+          <svg class="w-5 h-5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+          </svg>
+        </a>
+        <a href="#services" class="btn-secondary text-base">
+          {t('hero.cta2')}
+        </a>
+        <a href="#projects" class="btn-secondary text-base">
+          {t('hero.cta3')}
+        </a>
+      </div>
+
+      <!-- Trust Card -->
+      <div class="mt-12 glass rounded-2xl p-6 border border-white/10/50 shadow-sm animate-fade-in" style="animation-delay: 0.5s">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left">
+          <div class="flex items-start gap-3">
+            <div class="mt-0.5 flex-shrink-0 text-success">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <p class="text-sm text-text-body leading-relaxed">{t('hero.trust.1')}</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="mt-0.5 flex-shrink-0 text-success">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <p class="text-sm text-text-body leading-relaxed">{t('hero.trust.2')}</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="mt-0.5 flex-shrink-0 text-success">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <p class="text-sm text-text-body leading-relaxed">{t('hero.trust.3')}</p>
+          </div>
+          <div class="flex items-start gap-3">
+            <div class="mt-0.5 flex-shrink-0 text-success">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+            </div>
+            <p class="text-sm text-text-body leading-relaxed">{t('hero.trust.4')}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

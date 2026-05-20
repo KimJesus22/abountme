@@ -1,0 +1,273 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import type { Lang } from "../../i18n/ui";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = "en" } = Astro.props;
+const t = useTranslations(lang);
+
+const serviceOptions = [
+  { value: "buy-phone", label: t("services.1.title") },
+  { value: "setup-phone", label: t("services.2.title") },
+  { value: "tech-support", label: t("services.3.title") },
+  { value: "pc-build", label: t("services.4.title") },
+  { value: "laptop-advice", label: t("services.5.title") },
+  { value: "simple-web", label: t("services.6.title") },
+  { value: "business-digital", label: t("services.7.title") },
+  { value: "basic-security", label: t("services.8.title") },
+  { value: "other", label: t("quote.source.other") },
+];
+
+const attentionOptions = [
+  { value: "presencial", label: t("quote.attention.inperson") },
+  { value: "remota", label: t("quote.attention.remote") },
+  { value: "notsure", label: t("quote.attention.notsure") }
+];
+
+const urgencyOptions = [
+  { value: "today", label: t("quote.urgency.today") },
+  { value: "week", label: t("quote.urgency.week") },
+  { value: "norush", label: t("quote.urgency.norush") }
+];
+
+const sourceOptions = [
+  { value: "ciber", label: t("quote.source.ciber") },
+  { value: "oxxo", label: t("quote.source.oxxo") },
+  { value: "recommend", label: t("quote.source.recommend") },
+  { value: "facebook", label: t("quote.source.facebook") },
+  { value: "whatsapp", label: t("quote.source.whatsapp") },
+  { value: "github", label: t("quote.source.github") },
+  { value: "other", label: t("quote.source.other") }
+];
+---
+
+<section id="quote" class="bg-background">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge={t("quote.badge")}
+        title={t("quote.title")}
+        subtitle={t("quote.subtitle")}
+      />
+    </div>
+
+    <div class="max-w-4xl mx-auto reveal">
+      <form id="quote-form" data-msg-sending={t("quote.sending")} data-msg-success={t("quote.success")} data-msg-error={t("quote.error")} data-msg-submit={t("quote.submit")} class="card p-6 md:p-8 space-y-6">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Name -->
+          <div>
+            <label for="quote-name" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.name")} *</label>
+            <input type="text" id="quote-name" name="full_name" required class="input-base" />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label for="quote-phone" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.phone")} *</label>
+            <input type="tel" id="quote-phone" name="phone" required class="input-base" />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="quote-email" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.email")}</label>
+            <input type="email" id="quote-email" name="email" class="input-base" />
+          </div>
+
+          <!-- City -->
+          <div>
+            <label for="quote-city" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.city")} *</label>
+            <input type="text" id="quote-city" name="city" required class="input-base" />
+          </div>
+
+          <!-- Attention Type -->
+          <div>
+            <label for="quote-attention" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.attention")} *</label>
+            <select id="quote-attention" name="attention_type" required class="w-full px-4 py-3 rounded-xl border border-white/10 bg-surface text-text-heading focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+              <option value="">--</option>
+              {attentionOptions.map((opt) => <option value={opt.value}>{opt.label}</option>)}
+            </select>
+          </div>
+
+          <!-- Service Type -->
+          <div>
+            <label for="service_type" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.service")} *</label>
+            <select id="service_type" name="service_type" required class="w-full px-4 py-3 rounded-xl border border-white/10 bg-surface text-text-heading focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+              <option value="">{t("quote.service.select")}</option>
+              {serviceOptions.map((opt) => <option value={opt.value}>{opt.label}</option>)}
+            </select>
+          </div>
+          
+          <!-- Urgency -->
+          <div>
+            <label for="quote-urgency" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.urgency")} *</label>
+            <select id="quote-urgency" name="urgency" required class="w-full px-4 py-3 rounded-xl border border-white/10 bg-surface text-text-heading focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+              <option value="">--</option>
+              {urgencyOptions.map((opt) => <option value={opt.value}>{opt.label}</option>)}
+            </select>
+          </div>
+
+          <!-- Source -->
+          <div>
+            <label for="quote-source" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.source")} *</label>
+            <select id="quote-source" name="source" required class="w-full px-4 py-3 rounded-xl border border-white/10 bg-surface text-text-heading focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all">
+              <option value="">--</option>
+              {sourceOptions.map((opt) => <option value={opt.value}>{opt.label}</option>)}
+            </select>
+          </div>
+        </div>
+
+        <!-- Dynamic Feedback Areas -->
+        <div id="dynamic-estimates" class="hidden space-y-4">
+          <div id="price-estimate" class="hidden p-4 rounded-xl border border-primary/20 bg-primary/5 text-sm text-text-body">
+            <h4 class="font-semibold text-primary mb-1">Estimación orientativa</h4>
+            <p id="price-range" class="font-medium text-white mb-2"></p>
+            <p class="text-xs text-text-muted">Los precios son aproximados. El costo final depende del problema, tiempo requerido, distancia, piezas necesarias y tipo de atención.</p>
+          </div>
+
+          <div id="travel-warning" class="hidden p-4 rounded-xl border border-error/20 bg-error/5 text-sm text-text-body">
+            <div class="flex items-start gap-3">
+              <span class="text-error text-lg leading-none">⚠️</span>
+              <p>Puede aplicar costo adicional por traslado dependiendo de la ubicación.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="quote-desc" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.desc")} *</label>
+          <textarea id="quote-desc" name="description" rows="3" required class="input-base resize-none"></textarea>
+        </div>
+
+        <!-- Budget -->
+        <div>
+          <label for="quote-budget" class="block text-sm font-medium text-text-heading mb-1.5">{t("quote.budget")}</label>
+          <input type="text" id="quote-budget" name="budget" class="input-base" />
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" id="quote-submit" class="btn-primary w-full text-base py-3">
+          <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+          <span id="quote-btn-text">{t("quote.submit")}</span>
+        </button>
+
+        <!-- Feedback -->
+        <div id="quote-feedback" class="hidden text-center py-4 rounded-xl text-sm font-medium px-4 mt-4"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { insforge } from "../../lib/insforge";
+
+  const form = document.getElementById("quote-form") as HTMLFormElement;
+  const submitBtn = document.getElementById("quote-submit") as HTMLButtonElement;
+  const btnText = document.getElementById("quote-btn-text") as HTMLSpanElement;
+  const feedback = document.getElementById("quote-feedback") as HTMLDivElement;
+
+  const serviceSelect = document.getElementById("service_type") as HTMLSelectElement;
+  const attentionSelect = document.getElementById("quote-attention") as HTMLSelectElement;
+  const cityInput = document.getElementById("quote-city") as HTMLInputElement;
+  
+  const dynamicArea = document.getElementById("dynamic-estimates") as HTMLDivElement;
+  const priceContainer = document.getElementById("price-estimate") as HTMLDivElement;
+  const priceRange = document.getElementById("price-range") as HTMLParagraphElement;
+  const travelWarning = document.getElementById("travel-warning") as HTMLDivElement;
+
+  const priceMap: Record<string, string> = {
+    "buy-phone": "Desde $50 a $150 MXN",
+    "setup-phone": "Desde $150 a $400 MXN",
+    "tech-support": "Desde $100 a $500 MXN",
+    "pc-build": "Desde $250 a $800 MXN, sin incluir piezas",
+    "laptop-advice": "Desde $100 a $300 MXN",
+    "simple-web": "Desde $800 a $2,500 MXN",
+    "business-digital": "Desde $500 a $2,000 MXN",
+    "basic-security": "Desde $150 a $600 MXN",
+  };
+
+  function updateDynamicFeedback() {
+    let showArea = false;
+
+    const selectedService = serviceSelect.value;
+    if (priceMap[selectedService]) {
+      priceRange.textContent = priceMap[selectedService];
+      priceContainer.classList.remove("hidden");
+      showArea = true;
+    } else {
+      priceContainer.classList.add("hidden");
+    }
+
+    const selectedAttention = attentionSelect.value;
+    const cityValue = cityInput.value.trim().toLowerCase();
+    
+    if (selectedAttention === "presencial" && cityValue.length > 0 && !cityValue.includes("jaral")) {
+      travelWarning.classList.remove("hidden");
+      showArea = true;
+    } else {
+      travelWarning.classList.add("hidden");
+    }
+
+    if (showArea) {
+      dynamicArea.classList.remove("hidden");
+    } else {
+      dynamicArea.classList.add("hidden");
+    }
+  }
+
+  serviceSelect.addEventListener("change", updateDynamicFeedback);
+  attentionSelect.addEventListener("change", updateDynamicFeedback);
+  cityInput.addEventListener("input", updateDynamicFeedback);
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    
+    const msgSending = form.getAttribute('data-msg-sending') || "Enviando...";
+    const msgSuccess = form.getAttribute('data-msg-success') || "Enviado con éxito.";
+    const msgError = form.getAttribute('data-msg-error') || "Ocurrió un error.";
+    const msgSubmit = form.getAttribute('data-msg-submit') || "Enviar Solicitud";
+
+    btnText.textContent = msgSending;
+    feedback.classList.add("hidden");
+
+    const formData = new FormData(form);
+    const data = {
+      full_name: formData.get("full_name") as string,
+      phone: formData.get("phone") as string,
+      email: (formData.get("email") as string) || null,
+      city: formData.get("city") as string,
+      attention_type: formData.get("attention_type") as string,
+      service_type: formData.get("service_type") as string,
+      description: formData.get("description") as string,
+      budget: (formData.get("budget") as string) || null,
+      urgency: formData.get("urgency") as string,
+      source: formData.get("source") as string,
+    };
+
+    try {
+      const { error } = await insforge.database.from("quotes").insert([data]);
+
+      if (error) {
+        console.error("InsForge Error:", error);
+        throw error;
+      }
+
+      feedback.textContent = `✅ ${msgSuccess}`;
+      feedback.className = "text-center py-4 rounded-xl text-sm font-medium bg-success/10 text-success mt-4";
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      feedback.textContent = `❌ ${msgError}`;
+      feedback.className = "text-center py-4 rounded-xl text-sm font-medium bg-error/10 text-error mt-4";
+    } finally {
+      submitBtn.disabled = false;
+      btnText.textContent = msgSubmit;
+      feedback.classList.remove("hidden");
+    }
+  });
+</script>

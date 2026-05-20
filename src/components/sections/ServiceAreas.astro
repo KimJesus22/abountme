@@ -1,0 +1,71 @@
+---
+import { useTranslations } from '../../i18n/utils';
+import type { Lang } from '../../i18n/ui';
+import SectionHeading from '../ui/SectionHeading.astro';
+
+interface Props { lang?: Lang; }
+const { lang = 'en' } = Astro.props;
+const t = useTranslations(lang);
+
+const cities = (t('areas.local.cities') as string).split('|');
+---
+
+<section id="areas" class="bg-surface">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading badge={t('areas.badge')} title={t('areas.title')} subtitle={t('areas.subtitle')} />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mb-6">
+      <!-- Local / In-Person Card -->
+      <div class="card p-8 md:p-10 border border-primary/10 bg-primary/5 reveal" style="transition-delay: 0.1s">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 rounded-2xl bg-primary flex items-center justify-center text-white text-xl shadow-lg shadow-primary/20">
+            📍
+          </div>
+          <h3 class="text-2xl font-display font-semibold text-text-heading">{t('areas.local.title')}</h3>
+        </div>
+        
+        <ul class="space-y-3 mb-6">
+          {cities.map((city) => (
+            <li class="flex items-center gap-3 text-text-body font-medium">
+              <span class="w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0"></span>
+              {city}
+            </li>
+          ))}
+        </ul>
+
+        <div class="p-4 rounded-xl bg-surface/60 border border-primary/10 text-sm text-text-muted leading-relaxed">
+          <p><strong>{t('areas.local.title')}:</strong> {t('areas.local.desc')}</p>
+        </div>
+      </div>
+
+      <!-- Remote Card -->
+      <div class="card p-8 md:p-10 border border-white/10 bg-surface reveal" style="transition-delay: 0.2s">
+        <div class="flex items-center gap-4 mb-6">
+          <div class="w-12 h-12 rounded-2xl bg-surface-variant flex items-center justify-center text-text-muted text-xl">
+            🌐
+          </div>
+          <h3 class="text-2xl font-display font-semibold text-text-heading">{t('areas.remote.title')}</h3>
+        </div>
+        
+        <p class="text-text-body leading-relaxed mb-6">
+          {t('areas.remote.desc')}
+        </p>
+      </div>
+    </div>
+
+    <!-- Notice Card -->
+    <div class="max-w-5xl mx-auto card p-6 md:p-8 border border-error/20 bg-error/5 reveal flex flex-col sm:flex-row items-start sm:items-center gap-6" style="transition-delay: 0.3s">
+      <div class="w-12 h-12 rounded-2xl bg-accent flex items-center justify-center text-white text-xl shadow-lg shadow-accent/20 flex-shrink-0">
+        ⚠️
+      </div>
+      <div>
+        <h4 class="text-lg font-display font-semibold text-text-heading mb-1">{t('areas.notice.title')}</h4>
+        <p class="text-text-body text-sm leading-relaxed">
+          {t('areas.notice.desc')}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

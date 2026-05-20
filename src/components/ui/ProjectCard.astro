@@ -1,0 +1,83 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  learned?: string;
+  tags?: string[];
+  demoUrl?: string;
+  githubUrl?: string;
+  image?: string;
+}
+
+const { title, description, learned, tags = [], demoUrl, githubUrl, image } = Astro.props;
+---
+
+<div class="card group flex flex-col h-full overflow-hidden border border-border bg-background rounded-2xl shadow-sm" id={`project-${title.toLowerCase().replace(/\s+/g, '-')}`}>
+  <!-- Image -->
+  <div class="aspect-video bg-gradient-to-br from-primary/5 to-accent/10 relative overflow-hidden shrink-0 border-b border-border">
+    {image ? (
+      <img src={image} alt={title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+    ) : (
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-16 h-16 rounded-2xl bg-surface/80 flex items-center justify-center shadow-sm">
+          <svg class="w-8 h-8 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+          </svg>
+        </div>
+      </div>
+    )}
+  </div>
+
+  <!-- Content -->
+  <div class="p-5 md:p-6 flex flex-col flex-grow">
+    <h3 class="font-display font-bold text-xl text-text-heading mb-3">
+      {title}
+    </h3>
+    
+    <div class="space-y-4 mb-6 flex-grow">
+      <div>
+        <p class="text-text-body text-sm leading-relaxed">
+          {description}
+        </p>
+      </div>
+      
+      {learned && (
+        <div>
+          <h4 class="text-sm font-semibold text-text-heading mb-1">Qué aprendí:</h4>
+          <p class="text-text-body text-sm leading-relaxed">
+            {learned}
+          </p>
+        </div>
+      )}
+    </div>
+
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-6">
+        {tags.map((tag) => (
+          <span class="px-2.5 py-1 text-[11px] uppercase tracking-wider font-semibold text-primary bg-primary/10 rounded-full">
+            {tag}
+          </span>
+        ))}
+      </div>
+    )}
+
+    <!-- Buttons -->
+    <div class="flex flex-col gap-2 mt-auto pt-2 border-t border-border/50">
+      <div class="flex gap-2 w-full">
+        {demoUrl && (
+          <a href={demoUrl} target="_blank" rel="noopener noreferrer" class="flex-1 text-center px-4 py-2.5 bg-primary text-background text-sm font-medium rounded-lg hover:opacity-90 transition-opacity">
+            Ver proyecto
+          </a>
+        )}
+        {githubUrl && (
+          <a href={githubUrl} target="_blank" rel="noopener noreferrer" class="flex-1 text-center px-4 py-2.5 border border-border text-text text-sm font-medium rounded-lg hover:bg-border/50 transition-colors">
+            Ver código
+          </a>
+        )}
+      </div>
+      <a href={`#quote`} class="w-full text-center px-4 py-2.5 bg-secondary/10 text-secondary text-sm font-medium rounded-lg hover:bg-secondary/20 transition-colors">
+        Solicitar algo parecido
+      </a>
+    </div>
+  </div>
+</div>

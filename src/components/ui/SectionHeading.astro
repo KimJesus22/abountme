@@ -1,0 +1,23 @@
+---
+interface Props {
+  badge?: string;
+  title: string;
+  subtitle?: string;
+}
+
+const { badge, title, subtitle } = Astro.props;
+---
+
+<div class="text-center mb-12 md:mb-16">
+  {badge && (
+    <span class="section-badge mb-4 inline-block">{badge}</span>
+  )}
+  <h2 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-text-heading mt-3">
+    {title}
+  </h2>
+  {subtitle && (
+    <p class="mt-4 text-lg text-text-body max-w-2xl mx-auto">
+      {subtitle}
+    </p>
+  )}
+</div>
