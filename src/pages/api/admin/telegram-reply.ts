@@ -55,6 +55,11 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse({ error: 'Unauthorized' }, 401);
   }
 
+  const dataClient = createClient({
+    baseUrl: insforgeUrl,
+    anonKey: insforgeAnonKey,
+  });
+
   const { quoteId, telegramChatId, message } = await request.json();
   const cleanMessage = String(message || '').trim();
   const chatId = Number(telegramChatId);
@@ -63,7 +68,7 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse({ error: 'Missing required fields' }, 400);
   }
 
-  const { data: quoteData, error: quoteError } = await adminClient.database
+  const { data: quoteData, error: quoteError } = await dataClient.database
     .from('quotes')
     .select('id, telegram_chat_id')
     .eq('id', quoteId)
@@ -96,7 +101,7 @@ export const POST: APIRoute = async ({ request }) => {
     return jsonResponse({ error: 'Telegram message failed' }, 502);
   }
 
-  const { error: insertError } = await adminClient.database.from('telegram_messages').insert([{
+  const { error: insertError } = await dataClient.database.from('telegram_messages').insert([{
     quote_id: quoteId,
     telegram_chat_id: chatId,
     direction: 'outbound',

@@ -1,4 +1,5 @@
 import { insforge } from "../insforge";
+import { formatAttentionType, formatServiceType } from "../quotes/formatters";
 import { sendMessage, answerCallbackQuery } from "./telegramApi";
 
 type BotStep = 
@@ -300,7 +301,7 @@ async function notifyHumanAttentionOwner(details: {
               `*Username:* ${escapeTelegramMarkdown(details.username ? `@${details.username}` : 'Sin username')}\n` +
               `*Chat ID:* ${escapeTelegramMarkdown(details.chatId)}\n` +
               `*Último mensaje:* ${escapeTelegramMarkdown(details.lastMessage)}\n` +
-              `*Servicio:* ${escapeTelegramMarkdown(details.serviceType || '-')}`;
+              `*Servicio:* ${escapeTelegramMarkdown(formatServiceType(details.serviceType))}`;
 
   await sendMessage(Number(ownerChatId), msg);
 }
@@ -482,8 +483,8 @@ async function notifyOwner(quote: any) {
               `👤 *Cliente:* ${quote.full_name}\n` +
               `📍 *Ciudad:* ${quote.city}\n` +
               `📞 *Teléfono:* ${quote.phone}\n` +
-              `🛠 *Servicio:* ${quote.service_type}\n` +
-              `🏫 *Atención:* ${quote.attention_type}\n` +
+              `🛠 *Servicio:* ${formatServiceType(quote.service_type)}\n` +
+              `🏫 *Atención:* ${formatAttentionType(quote.attention_type)}\n` +
               `📝 *Descripción:* ${quote.description}\n\n` +
               `@${quote.telegram_username || 'Sin_Usuario'}`;
 

@@ -79,6 +79,20 @@ VITE_INSFORGE_URL=tu_url_de_insforge
 VITE_INSFORGE_ANON_KEY=tu_anon_key_de_insforge
 ```
 
+> Nota actual: este proyecto usa variables `PUBLIC_*` para Astro/InsForge. Mantén sincronizado tu `.env` y las variables de Vercel con `.env.example`.
+
+Variables necesarias para InsForge y Telegram:
+
+```env
+PUBLIC_INSFORGE_URL=https://tu-proyecto.region.insforge.app
+PUBLIC_INSFORGE_ANON_KEY=tu-anon-key
+PUBLIC_TELEGRAM_BOT_USERNAME=KimJesusCeronTechBot
+
+TELEGRAM_BOT_TOKEN=token-de-botfather
+TELEGRAM_OWNER_CHAT_ID=tu-chat-id-personal
+TELEGRAM_WEBHOOK_SECRET=secreto-del-webhook
+```
+
 ### 4. Iniciar el servidor de desarrollo
 ```bash
 pnpm run dev
@@ -93,6 +107,50 @@ El sitio estará disponible localmente en `http://localhost:4321`.
 - Es completamente privado y está desautorizado para los robots de búsqueda de Google.
 - Requiere autenticación configurada mediante `insforge.auth.signInWithPassword()`.
 - Necesitas crear un usuario administrador desde tu dashboard en InsForge y tener la tabla `quotes` creada en tu base de datos de PostgreSQL.
+
+### InsForge: tablas para cotizaciones y Telegram
+Este proyecto trabaja directamente con InsForge. Los archivos SQL dentro de `database/` son guías operativas para ejecutar manualmente en InsForge cuando prepares o actualices la base de datos; no dependen de GitHub para funcionar.
+
+Ejecuta estos SQL en InsForge:
+
+1. `database/quotes_telegram_fields.sql`
+   - Agrega a `quotes` los campos usados por el bot de Telegram.
+   - Define defaults seguros como `status = 'nueva'` y `telegram_status = 'new'`.
+   - Corrige el error de PostgREST cuando falta `telegram_chat_id`.
+
+2. `database/telegram_messages.sql`
+   - Crea la tabla `telegram_messages`.
+   - Guarda historial inbound/outbound asociado a una cotización.
+   - Permite responder desde `/admin` y ver el historial del chat.
+
+Campos esperados en `quotes` para el flujo de Telegram:
+
+```text
+full_name, phone, email, city, attention_type, service_type, description,
+budget, urgency, source, status, telegram_chat_id, telegram_username,
+telegram_first_name, telegram_last_name, telegram_status, created_at
+```
+
+### Bot de Telegram
+El bot configurado para contacto es `@KimJesusCeronTechBot`.
+
+Endpoint del webhook:
+
+```text
+/api/telegram/webhook
+```
+
+Para probar después de ejecutar los SQL en InsForge:
+
+1. Abre `@KimJesusCeronTechBot` en Telegram.
+2. Envía `/start`.
+3. Completa el flujo hasta elegir el origen.
+4. Debes recibir el mensaje de confirmación.
+5. Revisa `/admin` y confirma que la cotización aparece.
+6. Si falla, revisa los logs de Vercel buscando:
+   - `[telegram:webhook] Update received`
+   - `[telegram] Saving quote to InsForge`
+   - `[insforge] Error inserting Telegram quote`
 
 ### Despliegue en Vercel
 1. Importa el repositorio desde tu cuenta de Vercel.

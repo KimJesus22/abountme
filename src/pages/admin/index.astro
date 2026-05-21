@@ -164,6 +164,7 @@ import { serviceChecklists } from '../../data/checklists';
 
 <script>
   import { insforge } from '../../lib/insforge';
+  import { formatAttentionType, formatServiceType } from '../../lib/quotes/formatters';
 
   const authContainer = document.getElementById('auth-container');
   const dashboardContainer = document.getElementById('dashboard-container');
@@ -236,18 +237,36 @@ import { serviceChecklists } from '../../data/checklists';
 
   async function loadQuotes() {
     quotesList.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-text/50">Cargando cotizaciones...</td></tr>';
-    
-    const { data, error } = await insforge.database
-      .from('quotes')
-      .select('*')
-      .order('created_at', { ascending: false });
-      
-    if (error) {
-      quotesList.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-error">Error al cargar datos: ${error.message}</td></tr>`;
+
+    const authHeaders = insforge.getHttpClient?.().getHeaders?.() || {};
+    const authorization = authHeaders.Authorization || authHeaders.authorization;
+
+    if (!authorization) {
+      quotesList.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-error">No se encontró una sesión activa de administrador.</td></tr>';
       return;
     }
-    
-    quotesData = data || [];
+
+    try {
+      const response = await fetch('/api/admin/quotes', {
+        method: 'GET',
+        headers: {
+          Authorization: authorization,
+        },
+        cache: 'no-store',
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(result.error || 'No se pudieron cargar las cotizaciones.');
+      }
+
+      quotesData = result.quotes || [];
+    } catch (error) {
+      console.error(error);
+      quotesList.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-error">No se pudieron cargar las cotizaciones.</td></tr>';
+      return;
+    }
+
     renderQuotes();
   }
 
@@ -280,7 +299,7 @@ import { serviceChecklists } from '../../data/checklists';
         <tr class="hover:bg-surface/50 transition-colors group">
           <td class="p-4 whitespace-nowrap text-text/70">${date}</td>
           <td class="p-4 font-medium text-text-heading min-w-[200px]">${q.full_name} <br/><span class="text-xs text-text/50 font-normal">${q.city} • ${q.phone}</span></td>
-          <td class="p-4 text-text-body whitespace-nowrap">${q.service_type}</td>
+          <td class="p-4 text-text-body whitespace-nowrap">${formatServiceType(q.service_type)}</td>
           <td class="p-4 capitalize text-text-body whitespace-nowrap">${q.urgency}</td>
           <td class="p-4 whitespace-nowrap">${getStatusBadge(q.status)}</td>
           <td class="p-4 text-right whitespace-nowrap">
@@ -367,8 +386,8 @@ import { serviceChecklists } from '../../data/checklists';
     document.getElementById('modal-phone').textContent = q.phone || '-';
     document.getElementById('modal-email').textContent = q.email || '-';
     document.getElementById('modal-city').textContent = q.city || '-';
-    document.getElementById('modal-attention').textContent = q.attention_type || '-';
-    document.getElementById('modal-service').textContent = q.service_type || '-';
+    document.getElementById('modal-attention').textContent = formatAttentionType(q.attention_type);
+    document.getElementById('modal-service').textContent = formatServiceType(q.service_type);
     document.getElementById('modal-urgency').textContent = q.urgency || '-';
     document.getElementById('modal-budget').textContent = q.budget || '-';
     document.getElementById('modal-description').textContent = q.description || '-';
