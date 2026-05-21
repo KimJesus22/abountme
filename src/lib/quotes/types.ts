@@ -29,6 +29,13 @@ export interface Quote {
   budget?: string;
   status: QuoteStatus;
   created_at?: string;
+  
+  // Telegram fields
+  telegram_chat_id?: number;
+  telegram_username?: string;
+  telegram_first_name?: string;
+  telegram_last_name?: string;
+  telegram_status?: string;
 }
 
 // Interfaz para la futura función de IA
