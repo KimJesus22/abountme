@@ -12,14 +12,16 @@ El objetivo principal de este proyecto es demostrar que *"La tecnología no debe
 - **Optimizado para SEO Local**: Cuenta con Schema de Negocio Local (JSON-LD), archivo `robots.txt` protegido, `sitemap` dinámico y meta tags Open Graph para un excelente posicionamiento en búsquedas locales.
 - **Secciones Especializadas**:
   - 📱 *Asesoría para celulares*: Orientación guiada para compras sin engaños.
+  - 📋 *Checklist para elegir celular*: Guía visual y gratuita para evaluar opciones de equipos antes de comprar.
   - 🖥️ *Hardware y PCs*: Servicio de armado de equipos y mejora de laptops.
   - 🏪 *Soluciones para Negocios*: Menús digitales, WhatsApp Business y páginas web sencillas.
-  - 💼 *Proyectos y Experiencia*: Secciones que validan experiencia práctica real (OXXO, Kioscos GTO, etc.).
+  - 💼 *Proyectos y Casos Reales*: Secciones que validan experiencia práctica real (OXXO, Kioscos GTO, Ciber La Red, etc.) con ejemplos de equipos arreglados.
 - **Formulario de Cotización Inteligente**: Permite solicitar presupuestos con feedback dinámico en tiempo real (precios estimados y avisos de viáticos) según el servicio y el tipo de atención solicitada.
 - **Preparado para IA (Futuro)**: Cuenta con arquitectura modular y tipos de TypeScript definidos en `src/lib/quotes/quoteService.ts` listos para inyectar modelos de lenguaje que ayuden a "pre-cotizar" automáticamente leyendo el problema del cliente.
 - **Panel de Administración Privado (`/admin`)**: 
   - Conectado a **InsForge** (BaaS) mediante sesión segura.
-  - Gestión integral de cotizaciones (leer, responder, cambiar estatus, añadir notas).
+  - Gestión integral de cotizaciones (leer, responder, cambiar entre múltiples estatus visuales, ordenar por fecha, aplicar filtros, y añadir notas internas privadas).
+  - Integración nativa para leer y responder mensajes del bot de Telegram.
   - Incluye **Checklists de Cotización** nativos en el panel para ayudar al administrador a no olvidar preguntas críticas por WhatsApp según el tipo de servicio.
 
 ---

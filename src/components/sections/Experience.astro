@@ -8,15 +8,15 @@ const { lang = 'en' } = Astro.props;
 const t = useTranslations(lang);
 
 const experiences = [
-  { icon: '🔧', titleKey: 'exp.support.title', descKey: 'exp.support.desc' },
-  { icon: '🏪', titleKey: 'exp.oxxo.title', descKey: 'exp.oxxo.desc' },
-  { icon: '🖥️', titleKey: 'exp.kioscos.title', descKey: 'exp.kioscos.desc' },
-  { icon: '💻', titleKey: 'exp.web.title', descKey: 'exp.web.desc' },
-  { icon: '🛡️', titleKey: 'exp.cyber.title', descKey: 'exp.cyber.desc' },
+  { icon: '🖥️', titleKey: 'exp.1.title', descKey: 'exp.1.desc' },
+  { icon: '💻', titleKey: 'exp.2.title', descKey: 'exp.2.desc' },
+  { icon: '🔧', titleKey: 'exp.3.title', descKey: 'exp.3.desc' },
+  { icon: '🏪', titleKey: 'exp.4.title', descKey: 'exp.4.desc' },
+  { icon: '🌐', titleKey: 'exp.5.title', descKey: 'exp.5.desc' },
 ];
 ---
 
-<section id="experience">
+<section id="experience" class="bg-background">
   <div class="section-container">
     <div class="reveal">
       <SectionHeading badge={t('exp.badge')} title={t('exp.title')} subtitle={t('exp.subtitle')} />
@@ -28,25 +28,34 @@ const experiences = [
         <div class="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/50 to-transparent hidden md:block"></div>
 
         {experiences.map((exp, i) => (
-          <div class="reveal flex gap-6 mb-8 last:mb-0" style={`transition-delay: ${i * 0.1}s`}>
+          <div class="reveal flex gap-6 mb-8 last:mb-0 group" style={`transition-delay: ${i * 0.1}s`}>
             <!-- Icon -->
-            <div class="relative z-10 flex-shrink-0">
-              <div class="w-12 h-12 rounded-2xl bg-surface border-2 border-primary/20 flex items-center justify-center text-xl shadow-sm">
+            <div class="relative z-10 flex-shrink-0 hidden sm:block">
+              <div class="w-12 h-12 rounded-2xl bg-surface border-2 border-primary/20 flex items-center justify-center text-xl shadow-sm group-hover:scale-110 group-hover:bg-primary/10 transition-all duration-300">
                 {exp.icon}
               </div>
             </div>
 
             <!-- Content -->
-            <div class="card p-5 flex-1">
-              <h3 class="font-display font-semibold text-text-heading mb-1">
-                {t(exp.titleKey)}
-              </h3>
+            <div class="card card-hover p-6 flex-1 border border-white/5 bg-gradient-to-b from-surface/40 to-surface-dim hover:border-primary/30">
+              <div class="flex items-center gap-3 mb-2">
+                <div class="sm:hidden text-2xl">{exp.icon}</div>
+                <h3 class="font-display font-semibold text-lg text-text-heading">
+                  {t(exp.titleKey as any)}
+                </h3>
+              </div>
               <p class="text-sm text-text-body leading-relaxed">
-                {t(exp.descKey)}
+                {t(exp.descKey as any)}
               </p>
             </div>
           </div>
         ))}
+      </div>
+      
+      <div class="mt-12 text-center reveal">
+        <a href="#quote" class="btn-primary">
+          {t('exp.cta')}
+        </a>
       </div>
     </div>
   </div>

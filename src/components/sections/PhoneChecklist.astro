@@ -1,0 +1,95 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { telegramLink } from "../../lib/telegram";
+
+const checklistItems = [
+  {
+    icon: "🎯",
+    text: "¿Para qué lo vas a usar? WhatsApp, escuela, trabajo, fotos, juegos o negocio."
+  },
+  {
+    icon: "🧠",
+    text: "RAM: evita equipos muy limitados si quieres que duren más."
+  },
+  {
+    icon: "💾",
+    text: "Almacenamiento: 128 GB puede ser suficiente para muchos, pero 256 GB conviene si tomas muchas fotos, videos o usas muchas apps."
+  },
+  {
+    icon: "⚡",
+    text: "Procesador: no basta con decir Snapdragon, MediaTek, Exynos o Apple A; importa el modelo exacto."
+  },
+  {
+    icon: "🔋",
+    text: "Batería: revisa capacidad y estado, especialmente si es usado."
+  },
+  {
+    icon: "📱",
+    text: "Android Go: puede servir para uso muy básico, pero tiene limitaciones."
+  },
+  {
+    icon: "🛡️",
+    text: "Garantía: revisa si es nuevo, reacondicionado o usado."
+  },
+  {
+    icon: "🍎",
+    text: "Si es iPhone usado: revisar batería, iCloud, bloqueo, golpes y precio real."
+  },
+  {
+    icon: "🤖",
+    text: "Si es Android usado: revisar cuenta Google, pantalla, batería, cámaras y almacenamiento."
+  },
+  {
+    icon: "💳",
+    text: "Forma de pago: cuidado con créditos donde terminas pagando mucho más."
+  }
+];
+
+const tgHref = telegramLink('buy-phone');
+---
+
+<section id="phone-checklist" class="bg-surface py-24">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Checklist gratuito"
+        title="Antes de comprar celular, revisa esto"
+        subtitle="No compres solo por marca, cámara o memoria. Antes de gastar tu dinero, revisa estos puntos básicos."
+      />
+    </div>
+
+    <div class="max-w-4xl mx-auto mt-12">
+      <div class="reveal grid grid-cols-1 md:grid-cols-2 gap-4">
+        {checklistItems.map((item, i) => (
+          <div class="card p-5 flex items-start gap-4 hover:border-primary/30 transition-colors" style={`transition-delay: ${(i % 5) * 0.1}s`}>
+            <div class="text-2xl flex-shrink-0 mt-0.5">{item.icon}</div>
+            <p class="text-text-body text-[0.95rem] leading-relaxed">
+              {item.text}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      <div class="reveal mt-12" style="transition-delay: 0.3s">
+        <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6 justify-between">
+          <div class="flex items-start gap-4 flex-1">
+            <div class="text-3xl flex-shrink-0">💡</div>
+            <p class="text-text-heading font-medium leading-relaxed">
+              Si tienes dudas, mándame 2 o 3 opciones y te digo cuál conviene más según tu presupuesto.
+            </p>
+          </div>
+          
+          <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto flex-shrink-0">
+            <a href="#quote" onclick="document.getElementById('service_type').value='buy-phone'" class="btn-primary flex items-center justify-center">
+              Pedir asesoría
+            </a>
+            <a href={tgHref} target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 text-[#229ED9]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+              Cotizar por Telegram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
