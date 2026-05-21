@@ -1,6 +1,7 @@
 ---
 import { useTranslations, getLocalizedPath } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
+import { telegramBotLink } from '../../lib/telegram/botLink';
 
 interface Props {
   lang?: Lang;
@@ -21,7 +22,7 @@ const socialLinks = [
   { name: 'GitHub', href: 'https://github.com/KimJesus22', icon: 'github' },
   { name: 'LinkedIn', href: 'https://mx.linkedin.com/in/jesusceron', icon: 'linkedin' },
   { name: 'Facebook', href: 'https://www.facebook.com/jesus.ceron.99305/', icon: 'facebook' },
-  { name: 'Telegram', href: 'https://t.me/KimJesus21', icon: 'telegram' },
+  { name: 'Telegram', href: telegramBotLink, icon: 'telegram' },
 ];
 ---
 

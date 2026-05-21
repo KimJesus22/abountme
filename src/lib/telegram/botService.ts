@@ -26,6 +26,17 @@ interface SessionData {
   telegram_last_name?: string;
 }
 
+const HUMAN_ATTENTION_MESSAGE = "Claro, ya le avis\u00e9 a Jos\u00e9 para que revise tu caso personalmente. Mientras tanto, puedes dejarme m\u00e1s detalles del problema.";
+
+const HUMAN_ATTENTION_TRIGGERS = [
+  "humano",
+  "hablar con jose",
+  "hablar con jos\u00e9",
+  "asesor",
+  "quiero hablar contigo",
+  "contacto",
+];
+
 export async function processTelegramUpdate(update: any) {
   try {
     if (update.message && update.message.text) {
@@ -64,6 +75,155 @@ async function deleteSession(chatId: number) {
   await insforge.database.from('telegram_sessions').delete().eq('chat_id', chatId);
 }
 
+async function saveInboundTelegramMessage(chatId: number, messageText: string) {
+  const openQuote = await findOpenTelegramQuote(chatId);
+  if (!openQuote?.id) return;
+
+  const { error } = await insforge.database.from('telegram_messages').insert([{
+    quote_id: openQuote.id,
+    telegram_chat_id: chatId,
+    direction: 'inbound',
+    message_text: messageText,
+  }]);
+
+  if (error) {
+    console.error("Error saving inbound Telegram message", error);
+  }
+}
+
+function wantsHumanAttention(text: string) {
+  const normalized = text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '');
+
+  return HUMAN_ATTENTION_TRIGGERS.some((trigger) =>
+    normalized.includes(trigger.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))
+  );
+}
+
+function getTelegramDisplayName(message: any, sessionData?: SessionData) {
+  if (sessionData?.full_name) return sessionData.full_name;
+
+  const firstName = message.from?.first_name || sessionData?.telegram_first_name || '';
+  const lastName = message.from?.last_name || sessionData?.telegram_last_name || '';
+  const name = `${firstName} ${lastName}`.trim();
+
+  return name || 'Usuario de Telegram';
+}
+
+function escapeTelegramMarkdown(value: unknown) {
+  return String(value ?? '-').replace(/([_*[\]()~`>#+\-=|{}.!])/g, '\\$1');
+}
+
+function isOpenQuote(quote: any) {
+  const status = String(quote?.status || '').toLowerCase();
+  return !['accepted', 'rejected', 'completed', 'cerrado', 'rechazado', 'aceptado'].includes(status);
+}
+
+async function findOpenTelegramQuote(chatId: number) {
+  const { data, error } = await insforge.database
+    .from('quotes')
+    .select('*')
+    .eq('telegram_chat_id', chatId)
+    .order('created_at', { ascending: false });
+
+  if (error || !Array.isArray(data)) return null;
+  return data.find(isOpenQuote) || null;
+}
+
+async function requestHumanAttention(message: any, session: { step: BotStep, data: SessionData } | null) {
+  const chatId = message.chat.id;
+  const text = message.text.trim();
+  const sessionData = session?.data || {};
+  const fullName = getTelegramDisplayName(message, sessionData);
+  const username = message.from?.username || sessionData.telegram_username || null;
+  const serviceType = sessionData.service_type || null;
+
+  const openQuote = await findOpenTelegramQuote(chatId);
+  const quoteData = {
+    telegram_status: 'human_requested',
+    telegram_chat_id: chatId,
+    telegram_username: username,
+    telegram_first_name: message.from?.first_name || sessionData.telegram_first_name || null,
+    telegram_last_name: message.from?.last_name || sessionData.telegram_last_name || null,
+    service_type: serviceType || openQuote?.service_type || 'other',
+  };
+
+  if (openQuote?.id) {
+    const { error } = await insforge.database
+      .from('quotes')
+      .update(quoteData)
+      .eq('id', openQuote.id);
+
+    if (error) {
+      console.error("Error updating quote for human attention", error);
+      await sendMessage(chatId, "No pude guardar tu solicitud de atenci\u00f3n humana. Intenta de nuevo en un momento.");
+      return;
+    }
+  } else {
+    const { data: newQuote, error } = await insforge.database.from('quotes').insert([{
+      ...quoteData,
+      full_name: fullName,
+      phone: '',
+      city: '',
+      attention_type: 'notsure',
+      description: text,
+      urgency: 'norush',
+      source: 'telegram_bot',
+      status: 'nueva',
+    }]).select('id').single();
+
+    if (error) {
+      console.error("Error creating quote for human attention", error);
+      await sendMessage(chatId, "No pude guardar tu solicitud de atenci\u00f3n humana. Intenta de nuevo en un momento.");
+      return;
+    }
+
+    if (newQuote?.id) {
+      const { error: messageError } = await insforge.database.from('telegram_messages').insert([{
+        quote_id: newQuote.id,
+        telegram_chat_id: chatId,
+        direction: 'inbound',
+        message_text: text,
+      }]);
+
+      if (messageError) {
+        console.error("Error saving initial human attention message", messageError);
+      }
+    }
+  }
+
+  await sendMessage(chatId, HUMAN_ATTENTION_MESSAGE);
+  await notifyHumanAttentionOwner({
+    fullName,
+    username,
+    chatId,
+    lastMessage: text,
+    serviceType: serviceType || openQuote?.service_type || '-',
+  });
+}
+
+async function notifyHumanAttentionOwner(details: {
+  fullName: string;
+  username: string | null;
+  chatId: number;
+  lastMessage: string;
+  serviceType: string;
+}) {
+  const ownerChatId = import.meta.env.TELEGRAM_OWNER_CHAT_ID || process.env.TELEGRAM_OWNER_CHAT_ID;
+  if (!ownerChatId) return;
+
+  const msg = `El usuario quiere atenci\u00f3n humana\n\n` +
+              `*Nombre:* ${escapeTelegramMarkdown(details.fullName)}\n` +
+              `*Username:* ${escapeTelegramMarkdown(details.username ? `@${details.username}` : 'Sin username')}\n` +
+              `*Chat ID:* ${escapeTelegramMarkdown(details.chatId)}\n` +
+              `*Último mensaje:* ${escapeTelegramMarkdown(details.lastMessage)}\n` +
+              `*Servicio:* ${escapeTelegramMarkdown(details.serviceType || '-')}`;
+
+  await sendMessage(Number(ownerChatId), msg);
+}
+
 async function handleTextMessage(message: any) {
   const chatId = message.chat.id;
   const text = message.text.trim();
@@ -88,6 +248,13 @@ async function handleTextMessage(message: any) {
   }
 
   const session = await getSession(chatId);
+  await saveInboundTelegramMessage(chatId, text);
+
+  if (wantsHumanAttention(text)) {
+    await requestHumanAttention(message, session);
+    return;
+  }
+
   if (!session) {
     await sendMessage(chatId, "Escribe /start para comenzar una nueva cotización.");
     return;

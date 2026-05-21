@@ -3,6 +3,7 @@ import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 import SectionHeading from '../ui/SectionHeading.astro';
 import { whatsappLink, waMessages } from '../../lib/whatsapp';
+import { telegramBotHandle, telegramBotLink } from '../../lib/telegram/botLink';
 
 interface Props { lang?: Lang; }
 const { lang = 'en' } = Astro.props;
@@ -44,8 +45,8 @@ const t = useTranslations(lang);
           📨
         </div>
         <h3 class="font-display font-semibold text-text-heading mb-2">{t('contact.telegram')}</h3>
-        <a href="https://t.me/KimJesus21" target="_blank" rel="noopener noreferrer" class="text-primary hover:text-primary-dark transition-colors text-sm">
-          @KimJesus21
+        <a href={telegramBotLink} target="_blank" rel="noopener noreferrer" class="text-primary hover:text-primary-dark transition-colors text-sm">
+          {telegramBotHandle}
         </a>
       </div>
     </div>

@@ -116,6 +116,23 @@ import { serviceChecklists } from '../../data/checklists';
         <p id="modal-description" class="bg-background p-4 rounded-xl border border-border text-sm whitespace-pre-wrap text-text-heading leading-relaxed"></p>
       </div>
 
+      <div id="telegram-reply-box" class="hidden mb-6 bg-background p-4 rounded-xl border border-border">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+          <strong class="block text-xs text-text/70 uppercase tracking-wider">Responder por Telegram</strong>
+          <span id="telegram-chat-id-label" class="text-xs text-text/50"></span>
+        </div>
+
+        <div id="telegram-history" class="max-h-64 overflow-y-auto space-y-3 mb-4 pr-1 text-sm"></div>
+
+        <div class="space-y-3">
+          <textarea id="telegram-reply-message" rows="3" class="w-full px-4 py-3 rounded-xl border border-border bg-surface text-text-heading resize-none focus:ring-2 focus:ring-primary/30 outline-none placeholder-text/30" placeholder="Escribe tu respuesta para el usuario..."></textarea>
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+            <p id="telegram-reply-feedback" class="text-sm font-medium hidden"></p>
+            <button id="telegram-send-reply" type="button" class="px-5 py-2.5 bg-primary text-background rounded-xl font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed">Enviar por Telegram</button>
+          </div>
+        </div>
+      </div>
+
       <hr class="border-border my-6" />
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -160,7 +177,14 @@ import { serviceChecklists } from '../../data/checklists';
   const closeModal = document.getElementById('close-modal');
   const saveModal = document.getElementById('save-modal');
   const modalFeedback = document.getElementById('modal-feedback');
+  const telegramReplyBox = document.getElementById('telegram-reply-box');
+  const telegramChatIdLabel = document.getElementById('telegram-chat-id-label');
+  const telegramHistory = document.getElementById('telegram-history');
+  const telegramReplyMessage = document.getElementById('telegram-reply-message');
+  const telegramReplyFeedback = document.getElementById('telegram-reply-feedback');
+  const telegramSendReply = document.getElementById('telegram-send-reply');
   let currentQuoteId = null;
+  let currentTelegramChatId = null;
   let quotesData = [];
 
   // Init
@@ -274,12 +298,71 @@ import { serviceChecklists } from '../../data/checklists';
     });
   }
 
+  function showTelegramFeedback(message, type = 'success') {
+    telegramReplyFeedback.textContent = message;
+    telegramReplyFeedback.className = `text-sm font-medium ${type === 'error' ? 'text-error' : 'text-success'}`;
+    telegramReplyFeedback.classList.remove('hidden');
+  }
+
+  function renderTelegramHistory(messages) {
+    if (!currentTelegramChatId) {
+      telegramHistory.innerHTML = '';
+      return;
+    }
+
+    if (!messages || messages.length === 0) {
+      telegramHistory.innerHTML = '<p class="text-text/50">Aún no hay mensajes guardados para esta cotización.</p>';
+      return;
+    }
+
+    telegramHistory.innerHTML = '';
+    messages.forEach((msg) => {
+      const row = document.createElement('div');
+      const isOutbound = msg.direction === 'outbound';
+      row.className = `flex ${isOutbound ? 'justify-end' : 'justify-start'}`;
+
+      const bubble = document.createElement('div');
+      bubble.className = `max-w-[85%] rounded-xl border px-3 py-2 ${isOutbound ? 'bg-primary/10 border-primary/20 text-text-heading' : 'bg-surface border-border text-text-body'}`;
+
+      const meta = document.createElement('div');
+      meta.className = 'mb-1 text-[10px] uppercase tracking-wider text-text/50';
+      const createdAt = msg.created_at ? new Date(msg.created_at).toLocaleString('es-MX') : '';
+      meta.textContent = `${isOutbound ? 'José' : 'Usuario'}${createdAt ? ` • ${createdAt}` : ''}`;
+
+      const text = document.createElement('p');
+      text.className = 'whitespace-pre-wrap leading-relaxed';
+      text.textContent = msg.message_text || '';
+
+      bubble.append(meta, text);
+      row.appendChild(bubble);
+      telegramHistory.appendChild(row);
+    });
+  }
+
+  async function loadTelegramHistory(quoteId) {
+    telegramHistory.innerHTML = '<p class="text-text/50">Cargando historial...</p>';
+
+    const { data, error } = await insforge.database
+      .from('telegram_messages')
+      .select('*')
+      .eq('quote_id', quoteId)
+      .order('created_at', { ascending: true });
+
+    if (error) {
+      telegramHistory.innerHTML = '<p class="text-error">No se pudo cargar el historial de Telegram.</p>';
+      return;
+    }
+
+    renderTelegramHistory(data || []);
+  }
+
   // Modal logic
   function openModal(id) {
     const q = quotesData.find(x => x.id === id);
     if (!q) return;
     
     currentQuoteId = id;
+    currentTelegramChatId = q.telegram_chat_id || null;
     document.getElementById('modal-name').textContent = q.full_name || '-';
     document.getElementById('modal-phone').textContent = q.phone || '-';
     document.getElementById('modal-email').textContent = q.email || '-';
@@ -292,6 +375,17 @@ import { serviceChecklists } from '../../data/checklists';
     
     document.getElementById('modal-status').value = q.status || 'nueva';
     document.getElementById('modal-notes').value = q.notes || '';
+
+    telegramReplyMessage.value = '';
+    telegramReplyFeedback.classList.add('hidden');
+    if (currentTelegramChatId) {
+      telegramChatIdLabel.textContent = `Chat ID: ${currentTelegramChatId}`;
+      telegramReplyBox.classList.remove('hidden');
+      loadTelegramHistory(currentQuoteId);
+    } else {
+      telegramReplyBox.classList.add('hidden');
+      telegramHistory.innerHTML = '';
+    }
     
     modalFeedback.classList.add('hidden');
     modal.classList.remove('hidden');
@@ -305,6 +399,57 @@ import { serviceChecklists } from '../../data/checklists';
   modal.addEventListener('click', (e) => {
     if(e.target === modal) {
       modal.classList.add('hidden');
+    }
+  });
+
+  telegramSendReply.addEventListener('click', async () => {
+    if (!currentQuoteId || !currentTelegramChatId) return;
+
+    const message = telegramReplyMessage.value.trim();
+    if (!message) {
+      showTelegramFeedback('Escribe un mensaje antes de enviarlo.', 'error');
+      return;
+    }
+
+    const authHeaders = insforge.getHttpClient?.().getHeaders?.() || {};
+    const authorization = authHeaders.Authorization || authHeaders.authorization;
+    if (!authorization) {
+      showTelegramFeedback('No se encontró una sesión activa de administrador.', 'error');
+      return;
+    }
+
+    telegramSendReply.disabled = true;
+    telegramSendReply.textContent = 'Enviando...';
+    telegramReplyFeedback.classList.add('hidden');
+
+    try {
+      const response = await fetch('/api/admin/telegram-reply', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: authorization,
+        },
+        body: JSON.stringify({
+          quoteId: currentQuoteId,
+          telegramChatId: currentTelegramChatId,
+          message,
+        }),
+      });
+
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(result.error || 'No se pudo enviar el mensaje.');
+      }
+
+      telegramReplyMessage.value = '';
+      showTelegramFeedback('Mensaje enviado por Telegram.');
+      await loadTelegramHistory(currentQuoteId);
+    } catch (error) {
+      console.error(error);
+      showTelegramFeedback(error.message || 'No se pudo enviar el mensaje.', 'error');
+    } finally {
+      telegramSendReply.disabled = false;
+      telegramSendReply.textContent = 'Enviar por Telegram';
     }
   });
 
