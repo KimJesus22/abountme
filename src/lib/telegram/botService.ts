@@ -364,7 +364,7 @@ async function finishQuote(chatId: number, data: SessionData) {
     telegram_first_name: data.telegram_first_name,
     telegram_last_name: data.telegram_last_name,
     telegram_status: 'completed',
-    status: 'pending' // Estado general de la cotización
+    status: 'nueva' // Estado general de la cotización
   };
 
   const { error } = await insforge.database.from('quotes').insert([quoteRow]);

@@ -13,7 +13,7 @@ export type ServiceType =
 
 export type AttentionType = 'presencial' | 'remota' | 'notsure';
 
-export type QuoteStatus = 'pending' | 'reviewed' | 'contacted' | 'accepted' | 'rejected' | 'completed';
+export type QuoteStatus = 'nueva' | 'contactado' | 'en revisión' | 'cotizado' | 'aceptado' | 'rechazado' | 'cerrado';
 
 export interface Quote {
   id?: string;
