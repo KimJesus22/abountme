@@ -26,6 +26,26 @@ interface SessionData {
   telegram_last_name?: string;
 }
 
+type QuoteInsertPayload = {
+  full_name: string;
+  phone: string;
+  email: string | null;
+  city: string;
+  attention_type: string;
+  service_type: string;
+  description: string;
+  budget: string | null;
+  urgency: string;
+  source: string;
+  status: 'nueva';
+  telegram_chat_id: number;
+  telegram_username: string | null;
+  telegram_first_name: string | null;
+  telegram_last_name: string | null;
+  telegram_status: 'new';
+  created_at: string;
+};
+
 const HUMAN_ATTENTION_MESSAGE = "Claro, ya le avis\u00e9 a Jos\u00e9 para que revise tu caso personalmente. Mientras tanto, puedes dejarme m\u00e1s detalles del problema.";
 
 const HUMAN_ATTENTION_TRIGGERS = [
@@ -39,6 +59,13 @@ const HUMAN_ATTENTION_TRIGGERS = [
 
 export async function processTelegramUpdate(update: any) {
   try {
+    console.log("[telegram] Processing update", {
+      updateId: update?.update_id,
+      hasMessage: Boolean(update?.message),
+      hasCallbackQuery: Boolean(update?.callback_query),
+      chatId: update?.message?.chat?.id || update?.callback_query?.message?.chat?.id,
+    });
+
     if (update.message && update.message.text) {
       await handleTextMessage(update.message);
     } else if (update.callback_query) {
@@ -73,6 +100,60 @@ async function updateSession(chatId: number, step: BotStep, collectedData: Sessi
 
 async function deleteSession(chatId: number) {
   await insforge.database.from('telegram_sessions').delete().eq('chat_id', chatId);
+}
+
+function cleanString(value: unknown) {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function nullableString(value: unknown) {
+  const cleaned = cleanString(value);
+  return cleaned.length > 0 ? cleaned : null;
+}
+
+function getInsForgeErrorDetails(error: any) {
+  return {
+    statusCode: error?.statusCode || error?.status || error?.code || null,
+    responseBody: {
+      error: error?.error,
+      message: error?.message,
+      details: error?.details,
+      hint: error?.hint,
+      code: error?.code,
+      nextActions: error?.nextActions,
+    },
+    rawError: error,
+  };
+}
+
+function logInsForgeFailure(context: string, error: any, payload: unknown) {
+  console.error(`[insforge] ${context}`, {
+    table: 'quotes',
+    ...getInsForgeErrorDetails(error),
+    payload,
+  });
+}
+
+function buildTelegramQuotePayload(chatId: number, data: SessionData): QuoteInsertPayload {
+  return {
+    full_name: cleanString(data.full_name),
+    phone: cleanString(data.phone),
+    email: null,
+    city: cleanString(data.city),
+    attention_type: cleanString(data.attention_type) || 'notsure',
+    service_type: cleanString(data.service_type) || 'other',
+    description: cleanString(data.description),
+    budget: null,
+    urgency: cleanString(data.urgency) || 'norush',
+    source: cleanString(data.source) || 'telegram_bot',
+    status: 'nueva',
+    telegram_chat_id: chatId,
+    telegram_username: nullableString(data.telegram_username),
+    telegram_first_name: nullableString(data.telegram_first_name),
+    telegram_last_name: nullableString(data.telegram_last_name),
+    telegram_status: 'new',
+    created_at: new Date().toISOString(),
+  };
 }
 
 async function saveInboundTelegramMessage(chatId: number, messageText: string) {
@@ -341,44 +422,55 @@ async function handleCallbackQuery(callbackQuery: any) {
   else if (dataPayload.startsWith('src_') && step === 'awaiting_source') {
     data.source = dataPayload.replace('src_', '');
     data.source = data.source === 'other' ? 'telegram_bot' : data.source; // Identificar origen bot
-    await finishQuote(chatId, data);
+    await finishTelegramQuote(chatId, data);
   }
 }
 
-async function finishQuote(chatId: number, data: SessionData) {
-  // Borrar sesión
-  await deleteSession(chatId);
+async function finishTelegramQuote(chatId: number, data: SessionData) {
+  const quoteRow = buildTelegramQuotePayload(chatId, data);
 
-  // Guardar en la tabla quotes de InsForge
-  const quoteRow = {
-    full_name: data.full_name,
-    phone: data.phone,
-    city: data.city,
-    attention_type: data.attention_type,
-    service_type: data.service_type,
-    description: data.description,
-    urgency: data.urgency,
-    source: data.source,
-    telegram_chat_id: chatId,
-    telegram_username: data.telegram_username,
-    telegram_first_name: data.telegram_first_name,
-    telegram_last_name: data.telegram_last_name,
-    telegram_status: 'completed',
-    status: 'nueva' // Estado general de la cotización
-  };
+  console.log("[telegram] Saving quote to InsForge", {
+    table: 'quotes',
+    chatId,
+    serviceType: quoteRow.service_type,
+    attentionType: quoteRow.attention_type,
+    status: quoteRow.status,
+    telegramStatus: quoteRow.telegram_status,
+    hasInsForgeUrl: Boolean(import.meta.env.PUBLIC_INSFORGE_URL),
+    hasInsForgeAnonKey: Boolean(import.meta.env.PUBLIC_INSFORGE_ANON_KEY),
+  });
 
-  const { error } = await insforge.database.from('quotes').insert([quoteRow]);
+  const { data: insertedQuote, error } = await insforge.database
+    .from('quotes')
+    .insert([quoteRow])
+    .select('id')
+    .single();
 
   if (error) {
-    console.error("Error inserting quote from Telegram", error);
+    logInsForgeFailure("Error inserting Telegram quote", error, quoteRow);
     await sendMessage(chatId, "Hubo un error guardando tu solicitud. Por favor intenta de nuevo más tarde.");
     return;
   }
 
-  // Notificar al usuario
-  await sendMessage(chatId, "✅ *Gracias, recibí tu solicitud.*\n\nJosé revisará tu caso y te contactará pronto. Si es muy urgente, también puedes escribirle directamente por WhatsApp.");
+  console.log("[telegram] Quote saved successfully", {
+    table: 'quotes',
+    quoteId: insertedQuote?.id,
+    chatId,
+  });
 
-  // Notificar al Owner
+  const { error: deleteSessionError } = await insforge.database
+    .from('telegram_sessions')
+    .delete()
+    .eq('chat_id', chatId);
+
+  if (deleteSessionError) {
+    console.error("[telegram] Quote saved, but session cleanup failed", {
+      chatId,
+      ...getInsForgeErrorDetails(deleteSessionError),
+    });
+  }
+
+  await sendMessage(chatId, "✅ *Gracias, recibí tu solicitud.*\n\nJosé revisará tu caso y te contactará pronto. Si es muy urgente, también puedes escribirle directamente por WhatsApp.");
   await notifyOwner(quoteRow);
 }
 
