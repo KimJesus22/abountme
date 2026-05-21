@@ -1,6 +1,7 @@
 ---
 import Navbar from '../components/layout/Navbar.astro';
 import Footer from '../components/layout/Footer.astro';
+import TelegramFloatingButton from '../components/ui/TelegramFloatingButton.astro';
 import '../styles/global.css';
 import type { Lang } from '../i18n/ui';
 import { whatsappLink, waMessages } from '../lib/whatsapp';
@@ -60,6 +61,8 @@ const {
       <slot />
     </main>
     <Footer lang={lang} />
+
+    <TelegramFloatingButton />
 
     <!-- Floating WhatsApp Button -->
     <a
