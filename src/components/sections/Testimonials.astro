@@ -1,0 +1,106 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+// Tarjetas de experiencia basadas en historial real
+const experiences = [
+  {
+    role: "Atención a usuarios",
+    place: "Ciber La Red",
+    period: "2020 - 2025",
+    description: "Ayudando a personas a resolver problemas del día a día, realizar trámites en línea, imprimir documentos y usar computadoras sin frustración."
+  },
+  {
+    role: "Soporte en tiendas",
+    place: "OXXO (Icorp)",
+    period: "Experiencia en campo",
+    description: "Soporte técnico directo, mantenimiento de equipos de punto de venta y resolución rápida de fallas para que los negocios sigan operando."
+  },
+  {
+    role: "Apoyo ciudadano",
+    place: "Kioscos Digitales GTO",
+    period: "Actualidad",
+    description: "Asistiendo a personas de todas las edades a realizar trámites de gobierno digital de manera fácil y rápida, explicando con paciencia."
+  },
+  {
+    role: "Desarrollador Web",
+    place: "Proyectos Propios",
+    period: "Portafolio",
+    description: "Creación de plataformas desde cero, como tiendas en línea y sistemas de tickets, aplicando programación real para solucionar problemas reales."
+  }
+];
+
+// Placeholder para futuros testimonios reales
+// Cuando haya testimonios reales, descomentar y llenar este arreglo
+const realTestimonials = [
+  /*
+  {
+    name: "Nombre del Cliente",
+    service: "Configuración de equipo nuevo",
+    comment: "Excelente servicio, me explicó todo con mucha paciencia y dejó mi computadora lista para usar. ¡Recomendado!",
+    date: "Mayo 2026",
+    approved: true
+  }
+  */
+];
+---
+
+<section id="testimonials" class="bg-surface-dim py-24 border-t border-border/50">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Experiencia y Confianza"
+        title="Confianza construida con atención real"
+        subtitle="Durante mi experiencia en Ciber La Red, soporte en campo y Kioscos Digitales GTO, he atendido a cientos de personas con dudas, trámites, equipos y problemas tecnológicos del día a día."
+      />
+    </div>
+
+    <!-- Sección de Experiencia Práctica (En lugar de testimonios falsos) -->
+    <div class="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 reveal" style="animation-delay: 0.1s">
+      {experiences.map((exp, i) => (
+        <div class="card p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform">
+          <div>
+            <div class="flex justify-between items-start mb-4">
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-primary/10 text-primary text-xs font-semibold">
+                {exp.role}
+              </span>
+              <span class="text-xs text-text-muted font-medium bg-background px-2 py-1 rounded-md border border-border">
+                {exp.period}
+              </span>
+            </div>
+            <h3 class="text-lg font-semibold text-text-heading mb-2">{exp.place}</h3>
+            <p class="text-sm text-text-body leading-relaxed">{exp.description}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Template para futuros testimonios reales -->
+    {realTestimonials.length > 0 && (
+      <div class="mt-24 reveal">
+        <div class="text-center mb-12">
+          <h3 class="text-2xl font-display font-semibold text-text-heading">Lo que dicen mis clientes</h3>
+          <p class="text-text-muted mt-2">Reseñas reales de personas a las que he ayudado.</p>
+        </div>
+        
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {realTestimonials.filter(t => t.approved).map(testimonial => (
+            <div class="card p-6 relative">
+              <div class="text-primary mb-4">
+                <svg class="w-8 h-8 opacity-50" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+              </div>
+              <p class="text-text-body text-sm italic mb-6">"{testimonial.comment}"</p>
+              <div class="mt-auto">
+                <p class="font-semibold text-text-heading text-sm">{testimonial.name}</p>
+                <div class="flex justify-between items-center mt-1">
+                  <p class="text-xs text-primary font-medium">{testimonial.service}</p>
+                  <p class="text-xs text-text-muted">{testimonial.date}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+  </div>
+</section>

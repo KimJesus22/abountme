@@ -2,6 +2,7 @@
 import { useTranslations } from '../../i18n/utils';
 import type { Lang } from '../../i18n/ui';
 import SectionHeading from '../ui/SectionHeading.astro';
+import { whatsappLink, waMessages } from '../../lib/whatsapp';
 
 interface Props { lang?: Lang; }
 const { lang = 'en' } = Astro.props;
@@ -14,9 +15,20 @@ const t = useTranslations(lang);
       <SectionHeading badge={t('contact.badge')} title={t('contact.title')} subtitle={t('contact.subtitle')} />
     </div>
 
-    <div class="max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Email -->
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- WhatsApp -->
       <div class="reveal card p-6 text-center group">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-[#25D366]/10 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
+          📱
+        </div>
+        <h3 class="font-display font-semibold text-text-heading mb-2">WhatsApp</h3>
+        <a href={whatsappLink(waMessages.general)} target="_blank" rel="noopener noreferrer" class="text-[#25D366] hover:text-[#1fb855] transition-colors text-sm font-medium">
+          4111441791
+        </a>
+      </div>
+
+      <!-- Email -->
+      <div class="reveal card p-6 text-center group" style="transition-delay: 0.1s">
         <div class="w-14 h-14 mx-auto rounded-2xl bg-primary/10 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
           ✉️
         </div>
@@ -27,7 +39,7 @@ const t = useTranslations(lang);
       </div>
 
       <!-- Telegram -->
-      <div class="reveal card p-6 text-center group" style="transition-delay: 0.1s">
+      <div class="reveal card p-6 text-center group" style="transition-delay: 0.2s">
         <div class="w-14 h-14 mx-auto rounded-2xl bg-blue-50 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
           📨
         </div>

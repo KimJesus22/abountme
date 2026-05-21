@@ -2,30 +2,35 @@
 
 **JC21 Labs** es el portafolio profesional y plataforma de servicios de **José de Jesús Cerón López**, enfocado en brindar soluciones tecnológicas claras y accesibles para personas y pequeños negocios en Jaral del Progreso, Guanajuato y sus alrededores.
 
-El objetivo principal de este proyecto es demostrar que *"La tecnología no debería sentirse complicada"*, ofreciendo servicios desde soporte técnico y mejora de PCs, hasta digitalización básica para comercios locales.
+El objetivo principal de este proyecto es demostrar que *"La tecnología no debería sentirse complicada"*, ofreciendo servicios desde soporte técnico y mejora de PCs, hasta digitalización básica para comercios locales, siempre operando bajo un marco de **honestidad, transparencia y diagnósticos reales.**
 
 ---
 
 ## 🚀 Características Principales
 
-- **Diseño Moderno y Responsivo**: Construido con **Astro** y **Tailwind CSS** para un rendimiento ultrarrápido y una experiencia visual atractiva.
-- **Soporte Multi-idioma (i18n)**: Contenido estructurado para estar disponible en Español, Inglés, Coreano y Japonés.
+- **Diseño Moderno, Claro y Amable (Light Mode)**: Construido con **Astro** y **Tailwind CSS**, utilizando una paleta de colores claros y bordes suaves para inspirar confianza y profesionalismo en un público no técnico.
+- **Optimizado para SEO Local**: Cuenta con Schema de Negocio Local (JSON-LD), archivo `robots.txt` protegido, `sitemap` dinámico y meta tags Open Graph para un excelente posicionamiento en búsquedas locales.
 - **Secciones Especializadas**:
   - 📱 *Asesoría para celulares*: Orientación guiada para compras sin engaños.
   - 🖥️ *Hardware y PCs*: Servicio de armado de equipos y mejora de laptops.
-  - 🏪 *Soluciones para Negocios*: Menús digitales, WhatsApp Business, códigos QR y páginas web sencillas.
-  - 💼 *Portafolio de Proyectos*: Exhibición interactiva de proyectos destacados como StanStore, StageFront Tickets, entre otros.
-- **Formulario de Cotización Inteligente**: Permite a los clientes solicitar presupuestos con feedback dinámico en tiempo real según el servicio y el tipo de atención (presencial vs. remoto).
-- **Panel de Administración Privado**: Conectado a **InsForge** (Backend-as-a-Service), permite gestionar las cotizaciones recibidas de manera segura mediante autenticación, actualizar su estado y añadir notas internas.
+  - 🏪 *Soluciones para Negocios*: Menús digitales, WhatsApp Business y páginas web sencillas.
+  - 💼 *Proyectos y Experiencia*: Secciones que validan experiencia práctica real (OXXO, Kioscos GTO, etc.).
+- **Formulario de Cotización Inteligente**: Permite solicitar presupuestos con feedback dinámico en tiempo real (precios estimados y avisos de viáticos) según el servicio y el tipo de atención solicitada.
+- **Preparado para IA (Futuro)**: Cuenta con arquitectura modular y tipos de TypeScript definidos en `src/lib/quotes/quoteService.ts` listos para inyectar modelos de lenguaje que ayuden a "pre-cotizar" automáticamente leyendo el problema del cliente.
+- **Panel de Administración Privado (`/admin`)**: 
+  - Conectado a **InsForge** (BaaS) mediante sesión segura.
+  - Gestión integral de cotizaciones (leer, responder, cambiar estatus, añadir notas).
+  - Incluye **Checklists de Cotización** nativos en el panel para ayudar al administrador a no olvidar preguntas críticas por WhatsApp según el tipo de servicio.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-- [**Astro**](https://astro.build/) - Framework web para sitios estáticos ultra rápidos.
-- [**Tailwind CSS**](https://tailwindcss.com/) - Framework de CSS utilitario para diseño a medida.
-- [**TypeScript**](https://www.typescriptlang.org/) - Tipado estricto para un JavaScript más robusto.
-- [**InsForge**](https://insforge.com/) - Backend-as-a-Service (Autenticación y Base de Datos PostgreSQL).
+- [**Astro 6.x**](https://astro.build/) - Framework web estático ultra rápido.
+- [**Tailwind CSS 3.4**](https://tailwindcss.com/) - Framework CSS para diseño responsivo.
+- [**TypeScript**](https://www.typescriptlang.org/) - Tipado estricto (`types.ts` en todo el proyecto).
+- [**InsForge SDK**](https://insforge.com/) - Backend-as-a-Service para PostgreSQL, Auth y Storage.
+- **@astrojs/sitemap** - Generación automática de mapas de sitio para SEO.
 
 ---
 
@@ -33,18 +38,20 @@ El objetivo principal de este proyecto es demostrar que *"La tecnología no debe
 
 ```text
 /
-├── public/                 # Assets estáticos (imágenes, fuentes, favicons)
+├── public/                 # Assets estáticos y robots.txt
 ├── src/
-│   ├── components/         # Componentes UI reutilizables
-│   │   ├── sections/       # Secciones completas (Hero, About, Hardware, PhoneAdvice, etc.)
-│   │   └── ui/             # Pequeños elementos (Botones, Tarjetas, Encabezados)
-│   ├── i18n/               # Configuración y diccionarios de traducciones
-│   ├── layouts/            # Estructuras base de la página HTML
-│   ├── lib/                # Utilidades compartidas y configuración del cliente InsForge
-│   └── pages/              # Sistema de rutas de Astro (incluyendo el panel /admin)
-├── astro.config.mjs        # Configuración general de Astro
-├── tailwind.config.mjs     # Configuración de temas y colores de Tailwind CSS
-└── package.json            # Dependencias y scripts del entorno
+│   ├── components/         
+│   │   ├── layout/         # Navbar, Footer
+│   │   ├── sections/       # Secciones (Hero, About, Testimonials, QuoteForm)
+│   │   └── ui/             # Pequeños elementos
+│   ├── data/               # Archivos estáticos como los Checklists para el panel admin
+│   ├── i18n/               # Configuración multi-idioma (es, en, ko, ja)
+│   ├── layouts/            # Estructuras base con inyección de SEO (MainLayout.astro)
+│   ├── lib/                # Configuración de InsForge, links a WA y lógica de Cotizaciones (IA)
+│   └── pages/              # Rutas de Astro (index de idiomas y panel privado /admin)
+├── astro.config.mjs        # Configuración de Astro (integraciones)
+├── tailwind.config.mjs     # Paleta de colores "Light Mode" (Índigo y grises suaves)
+└── package.json            # Dependencias
 ```
 
 ---
@@ -60,16 +67,16 @@ cd jc21-labs
 ```
 
 ### 2. Instalar dependencias
-Recomendamos usar `pnpm`, pero `npm` o `yarn` también funcionan:
+Recomendamos usar `pnpm`:
 ```bash
 pnpm install
 ```
 
 ### 3. Configurar variables de entorno
-Crea un archivo `.env` en la raíz del proyecto y agrega tus credenciales públicas de InsForge para que el formulario y el panel de administración puedan comunicarse con la base de datos:
+Crea un archivo `.env` en la raíz del proyecto basándote en el `.env.example`. Asegúrate de usar el prefijo `VITE_` para que Astro pueda leerlas desde el cliente:
 ```env
-PUBLIC_INSFORGE_URL=tu_url_de_insforge
-PUBLIC_INSFORGE_ANON_KEY=tu_anon_key_de_insforge
+VITE_INSFORGE_URL=tu_url_de_insforge
+VITE_INSFORGE_ANON_KEY=tu_anon_key_de_insforge
 ```
 
 ### 4. Iniciar el servidor de desarrollo
@@ -80,21 +87,24 @@ El sitio estará disponible localmente en `http://localhost:4321`.
 
 ---
 
-## 🔒 Panel de Administración
+## 🔒 Panel de Administración y Despliegue
 
-El proyecto cuenta con un panel privado integrado en la ruta `/admin` para gestionar cotizaciones y clientes. 
+### Panel de Administración (`/admin`)
+- Es completamente privado y está desautorizado para los robots de búsqueda de Google.
+- Requiere autenticación configurada mediante `insforge.auth.signInWithPassword()`.
+- Necesitas crear un usuario administrador desde tu dashboard en InsForge y tener la tabla `quotes` creada en tu base de datos de PostgreSQL.
 
-**Para acceder:**
-1. Es necesario tener la tabla `quotes` configurada en tu base de datos de InsForge (con la columna `notes` habilitada).
-2. Deberás crear un usuario administrador desde el apartado de **Auth** en tu panel de InsForge.
-3. Ingresa a `tusitio.com/admin` (o `localhost:4321/admin`), inicia sesión con ese correo y contraseña, y administra las solicitudes de forma segura.
+### Despliegue en Vercel
+1. Importa el repositorio desde tu cuenta de Vercel.
+2. Vercel detectará la configuración de Astro automáticamente.
+3. Asegúrate de inyectar las variables de entorno (`VITE_INSFORGE_URL` y `VITE_INSFORGE_ANON_KEY`) en la configuración del proyecto en Vercel antes del despliegue.
 
 ---
 
-## 🤝 Autor y Contacto
+## 🤝 Autor y Filosofía
 
 Desarrollado y mantenido por **José de Jesús Cerón López**.
 
 - **GitHub**: [@KimJesus22](https://github.com/KimJesus22)
 - **Localización**: Jaral del Progreso, Guanajuato.
-- **Filosofía**: *Tecnología clara para personas y negocios reales.*
+- **Filosofía**: *Tecnología clara para personas y negocios reales. Sin promesas mágicas, con diagnósticos honestos.*

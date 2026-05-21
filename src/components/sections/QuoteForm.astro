@@ -133,6 +133,19 @@ const sourceOptions = [
               <p>Puede aplicar costo adicional por traslado dependiendo de la ubicación.</p>
             </div>
           </div>
+
+          <!-- AI Pre-quote Container (Futuro) -->
+          <div id="ai-suggestions-container" class="hidden p-4 rounded-xl border border-secondary/30 bg-secondary/5 text-sm">
+            <div class="flex items-start gap-3">
+              <span class="text-secondary text-lg leading-none">✨</span>
+              <div class="w-full">
+                <h4 class="font-semibold text-secondary mb-1">Análisis Inteligente (Beta)</h4>
+                <div id="ai-suggestions-content" class="text-text-body space-y-2">
+                  <!-- Se llenará vía JS en el futuro -->
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- Description -->
@@ -164,6 +177,7 @@ const sourceOptions = [
 
 <script>
   import { insforge } from "../../lib/insforge";
+  import { analyzeQuoteWithAI } from "../../lib/quotes/quoteService";
 
   const form = document.getElementById("quote-form") as HTMLFormElement;
   const submitBtn = document.getElementById("quote-submit") as HTMLButtonElement;
@@ -178,6 +192,10 @@ const sourceOptions = [
   const priceContainer = document.getElementById("price-estimate") as HTMLDivElement;
   const priceRange = document.getElementById("price-range") as HTMLParagraphElement;
   const travelWarning = document.getElementById("travel-warning") as HTMLDivElement;
+
+  const quoteDescInput = document.getElementById("quote-desc") as HTMLTextAreaElement;
+  const aiContainer = document.getElementById("ai-suggestions-container") as HTMLDivElement;
+  const aiContent = document.getElementById("ai-suggestions-content") as HTMLDivElement;
 
   const priceMap: Record<string, string> = {
     "buy-phone": "Desde $50 a $150 MXN",
@@ -222,6 +240,17 @@ const sourceOptions = [
   serviceSelect.addEventListener("change", updateDynamicFeedback);
   attentionSelect.addEventListener("change", updateDynamicFeedback);
   cityInput.addEventListener("input", updateDynamicFeedback);
+
+  // TODO: Conectar AI en el futuro cuando el usuario termine de escribir
+  quoteDescInput.addEventListener("blur", async () => {
+    const desc = quoteDescInput.value.trim();
+    if (desc.length > 20) {
+      // const aiResult = await analyzeQuoteWithAI(desc);
+      // if (aiResult) {
+      //   Mostrar recomendaciones de IA en aiContainer...
+      // }
+    }
+  });
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();

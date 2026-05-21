@@ -131,3 +131,50 @@ Available languages:
 - Storage: Upload files to buckets, store URLs in database
 - AI integrations should call OpenRouter directly with `baseURL: "https://openrouter.ai/api/v1"` and a server-side `OPENROUTER_API_KEY`
 - **EXTRA IMPORTANT**: Use Tailwind CSS 3.4 (do not upgrade to v4). Lock these dependencies in `package.json`
+
+---
+
+## 🚨 PROJECT-SPECIFIC RULES
+
+### This project uses InsForge — NOT Supabase
+
+- The backend is **InsForge** (`@insforge/sdk`). Do NOT use Supabase patterns, methods, or syntax.
+- The SDK client is configured in `src/lib/insforge.ts`.
+- **NEVER** use `getSession()`, `onAuthStateChange()`, `supabase.auth.*`, or any Supabase-style API.
+
+### InsForge Auth — Correct Methods Quick Reference
+
+| Action | Correct InsForge Method |
+|---|---|
+| Check current user | `insforge.auth.getCurrentUser()` → `{ data: { user }, error }` |
+| Sign in with email/password | `insforge.auth.signInWithPassword({ email, password })` → `{ data: { user, accessToken }, error }` |
+| Sign out | `insforge.auth.signOut()` → `{ error }` |
+| Sign up | `insforge.auth.signUp({ email, password, name })` → `{ data: { user, accessToken, requireEmailVerification }, error }` |
+| Get user profile | `insforge.auth.getProfile(userId)` → `{ data, error }` |
+| Update profile | `insforge.auth.setProfile({ name, ... })` → `{ data, error }` |
+| OAuth login | `insforge.auth.signInWithOAuth({ provider, redirectTo })` |
+
+### InsForge Database — Correct Patterns
+
+```javascript
+// SELECT
+const { data, error } = await insforge.database.from('table').select('*');
+
+// INSERT (always use array)
+const { error } = await insforge.database.from('table').insert([{ ... }]);
+
+// UPDATE with filter
+const { error } = await insforge.database.from('table').update({ ... }).eq('id', value);
+
+// DELETE with filter
+const { error } = await insforge.database.from('table').delete().eq('id', value);
+```
+
+### Stack Summary
+
+- **Framework**: Astro (static site, `src/pages/` routing)
+- **Styling**: Tailwind CSS 3.4 (do NOT upgrade to v4)
+- **Backend**: InsForge (PostgreSQL + Auth + Storage)
+- **i18n**: Custom system in `src/i18n/` (en, es, ko, ja)
+- **Admin panel**: `/admin` (private, uses InsForge Auth, NOT in navbar)
+- **WhatsApp helper**: `src/lib/whatsapp.ts` (centralized number + messages)

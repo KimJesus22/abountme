@@ -1,5 +1,7 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+import { waMessages } from "../../lib/whatsapp";
 import type { Lang } from "../../i18n/ui";
 
 interface Props {
@@ -40,10 +42,11 @@ const services = [
           </p>
         </div>
 
-        <div class="pt-4">
+        <div class="pt-4 flex flex-col sm:flex-row gap-3">
           <a href="#quote" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-medium rounded-lg hover:opacity-90 transition-opacity">
             Cotizar mejora o armado
           </a>
+          <WhatsAppButton message={waMessages.hardware} label="WhatsApp" />
         </div>
       </div>
 

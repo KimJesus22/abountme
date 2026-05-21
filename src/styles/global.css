@@ -24,25 +24,25 @@
 
 @layer components {
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-lg border border-transparent hover:bg-[#6f00be] transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-primary text-white font-medium rounded-2xl border border-transparent shadow-sm hover:bg-primary/90 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
   }
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-transparent text-white font-medium rounded-lg border border-primary hover:bg-primary/10 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-surface-dim text-text-heading font-medium rounded-2xl border border-border shadow-sm hover:border-primary/30 hover:bg-surface-container transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
   }
   .btn-ghost {
-    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-transparent text-text-muted font-medium rounded-lg hover:text-white hover:bg-white/5 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-background;
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 bg-transparent text-text-body font-medium rounded-2xl hover:text-primary hover:bg-primary/10 transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2;
   }
   .section-container {
     @apply max-w-container-max mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28;
   }
   .card {
-    @apply bg-[#080A12] rounded-2xl border border-slate-50/5 shadow-sm hover:border-primary/20 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 ease-out overflow-hidden;
+    @apply bg-surface-dim rounded-3xl border border-border shadow-md hover:border-primary/30 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 ease-out overflow-hidden;
   }
   .card-hover {
     @apply hover:-translate-y-1;
   }
   .glass {
-    @apply bg-[#080A12]/80 backdrop-blur-lg border border-white/5;
+    @apply bg-surface/80 backdrop-blur-lg border border-white/5 shadow-xl;
   }
   .gradient-text {
     @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-secondary;

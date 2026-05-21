@@ -1,5 +1,7 @@
 ---
 import SectionHeading from "../ui/SectionHeading.astro";
+import WhatsAppButton from "../ui/WhatsAppButton.astro";
+import { waMessages } from "../../lib/whatsapp";
 
 const services = [
   "WhatsApp Business",
@@ -58,10 +60,11 @@ const packages = [
             </p>
           </div>
 
-          <div class="pt-4">
+          <div class="pt-4 flex flex-col sm:flex-row gap-3">
             <a href="#quote?service=Soluciones%20para%20negocios" class="inline-flex items-center justify-center px-6 py-3 bg-primary text-background font-medium rounded-lg hover:opacity-90 transition-opacity">
               Cotizar para mi negocio
             </a>
+            <WhatsAppButton message={waMessages.business} label="WhatsApp" />
           </div>
         </div>
 

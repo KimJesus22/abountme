@@ -1,0 +1,73 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+
+const notices = [
+  {
+    icon: "🔍",
+    title: "Diagnóstico honesto",
+    text: "No prometo que todos los equipos puedan quedar rápidos o como nuevos. Algunos celulares, computadoras o laptops están limitados por hardware, antigüedad, batería, almacenamiento o sistema operativo."
+  },
+  {
+    icon: "🔒",
+    title: "Datos personales",
+    text: "No guardo contraseñas ni datos bancarios. Si se requiere acceder a una cuenta, el cliente debe escribir sus datos personalmente."
+  },
+  {
+    icon: "💳",
+    title: "Pagos y transferencias",
+    text: "Puedo orientar paso a paso, pero el cliente debe confirmar y realizar sus propios pagos o transferencias."
+  },
+  {
+    icon: "📦",
+    title: "Equipos usados",
+    text: "En compras de celulares, laptops o componentes usados, puedo ayudar a revisar señales de riesgo, pero la decisión final de compra es del cliente."
+  },
+  {
+    icon: "🔧",
+    title: "Piezas y componentes",
+    text: "No vendo piezas directamente. Si se requiere RAM, SSD, cargadores u otros componentes, se cotizan aparte o el cliente puede comprarlos directamente."
+  },
+  {
+    icon: "📍",
+    title: "Atención presencial",
+    text: "La atención presencial solo está disponible en Jaral del Progreso, Valle de Santiago, Cortazar y Celaya, según disponibilidad."
+  },
+  {
+    icon: "🌐",
+    title: "Atención remota",
+    text: "Algunos problemas pueden resolverse remotamente, pero otros requieren revisión física."
+  }
+];
+---
+
+<section id="notices" class="bg-background py-24 border-t border-border/50">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Transparencia"
+        title="Avisos importantes"
+        subtitle="Para que trabajes conmigo con confianza y claridad desde el inicio."
+      />
+    </div>
+
+    <div class="max-w-4xl mx-auto mt-12 space-y-4">
+      {notices.map((notice, i) => (
+        <div class="reveal bg-surface border border-border rounded-2xl p-6 flex items-start gap-5 hover:border-primary/20 transition-colors" style={`transition-delay: ${i * 0.05}s`}>
+          <span class="flex-shrink-0 w-11 h-11 rounded-xl bg-primary/10 flex items-center justify-center text-xl">{notice.icon}</span>
+          <div>
+            <h3 class="font-semibold text-text-heading mb-1">{notice.title}</h3>
+            <p class="text-text-body text-[0.95rem] leading-relaxed">{notice.text}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <div class="reveal max-w-4xl mx-auto mt-8">
+      <div class="bg-primary/5 border border-primary/15 rounded-2xl p-6 text-center">
+        <p class="text-text-body text-[0.95rem] leading-relaxed">
+          Estos avisos existen para protegerte y para que ambos trabajemos con claridad. Si tienes alguna duda antes de contratar un servicio, con gusto te la resuelvo.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

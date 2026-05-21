@@ -1,8 +1,9 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
+import { serviceChecklists } from '../../data/checklists';
 ---
 <MainLayout title="Admin - Cotizaciones" lang="es">
-  <section class="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
+  <section class="min-h-screen bg-background pt-32 pb-12 px-4 sm:px-6 lg:px-8">
     <div id="auth-container" class="max-w-md mx-auto bg-surface p-8 rounded-2xl border border-border shadow-sm hidden">
       <h2 class="text-2xl font-bold mb-6 text-text-heading text-center">Acceso Administrador</h2>
       <form id="login-form" class="space-y-4">
@@ -30,12 +31,12 @@ import MainLayout from '../../layouts/MainLayout.astro';
           <table class="w-full text-left text-sm">
             <thead class="bg-background border-b border-border text-text-heading">
               <tr>
-                <th class="p-4 font-semibold">Fecha</th>
-                <th class="p-4 font-semibold">Cliente</th>
-                <th class="p-4 font-semibold">Servicio</th>
-                <th class="p-4 font-semibold">Urgencia</th>
-                <th class="p-4 font-semibold">Estado</th>
-                <th class="p-4 font-semibold text-right">Acciones</th>
+                <th class="p-4 font-semibold whitespace-nowrap">Fecha</th>
+                <th class="p-4 font-semibold whitespace-nowrap">Cliente</th>
+                <th class="p-4 font-semibold whitespace-nowrap">Servicio</th>
+                <th class="p-4 font-semibold whitespace-nowrap">Urgencia</th>
+                <th class="p-4 font-semibold whitespace-nowrap">Estado</th>
+                <th class="p-4 font-semibold text-right whitespace-nowrap">Acciones</th>
               </tr>
             </thead>
             <tbody id="quotes-list" class="divide-y divide-border">
@@ -44,12 +45,31 @@ import MainLayout from '../../layouts/MainLayout.astro';
           </table>
         </div>
       </div>
+      
+      <div class="mt-16 mb-8">
+        <h2 class="text-2xl font-bold text-text-heading mb-6">Checklists para Cotizar</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {serviceChecklists.map(list => (
+            <div class="bg-surface border border-border rounded-2xl p-6 shadow-sm flex flex-col">
+              <h3 class="font-bold text-lg text-primary mb-4 border-b border-border/50 pb-2">{list.title}</h3>
+              <ul class="space-y-3">
+                {list.items.map(item => (
+                  <li class="flex items-start gap-2 text-sm text-text-body">
+                    <svg class="w-4 h-4 text-success mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                    <span class="leading-tight">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Modal -->
   <div id="quote-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black/50 backdrop-blur-sm p-4">
-    <div class="bg-surface w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-border shadow-2xl p-6 md:p-8 relative">
+    <div class="bg-surface w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-border shadow-2xl p-5 sm:p-6 md:p-8 relative">
       <button id="close-modal" class="absolute top-4 right-4 text-text hover:text-text-heading p-2 rounded-full hover:bg-border/50 transition-colors">
         <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
       </button>
@@ -145,8 +165,8 @@ import MainLayout from '../../layouts/MainLayout.astro';
 
   // Init
   async function init() {
-    const { data: { session } } = await insforge.auth.getSession();
-    if (session) {
+    const { data, error } = await insforge.auth.getCurrentUser();
+    if (data?.user) {
       showDashboard();
     } else {
       authContainer.classList.remove('hidden');
@@ -235,11 +255,11 @@ import MainLayout from '../../layouts/MainLayout.astro';
       return `
         <tr class="hover:bg-surface/50 transition-colors group">
           <td class="p-4 whitespace-nowrap text-text/70">${date}</td>
-          <td class="p-4 font-medium text-text-heading">${q.full_name} <br/><span class="text-xs text-text/50 font-normal">${q.city} • ${q.phone}</span></td>
-          <td class="p-4 text-text-body">${q.service_type}</td>
-          <td class="p-4 capitalize text-text-body">${q.urgency}</td>
-          <td class="p-4">${getStatusBadge(q.status)}</td>
-          <td class="p-4 text-right">
+          <td class="p-4 font-medium text-text-heading min-w-[200px]">${q.full_name} <br/><span class="text-xs text-text/50 font-normal">${q.city} • ${q.phone}</span></td>
+          <td class="p-4 text-text-body whitespace-nowrap">${q.service_type}</td>
+          <td class="p-4 capitalize text-text-body whitespace-nowrap">${q.urgency}</td>
+          <td class="p-4 whitespace-nowrap">${getStatusBadge(q.status)}</td>
+          <td class="p-4 text-right whitespace-nowrap">
             <button class="view-btn px-4 py-2 bg-primary/10 text-primary text-sm font-medium rounded-lg hover:bg-primary/20 transition-colors opacity-80 group-hover:opacity-100" data-id="${q.id}">Revisar</button>
           </td>
         </tr>
