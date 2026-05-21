@@ -8,7 +8,7 @@ El objetivo principal de este proyecto es demostrar que *"La tecnología no debe
 
 ## 🚀 Características Principales
 
-- **Diseño Moderno, Claro y Amable (Light Mode)**: Construido con **Astro** y **Tailwind CSS**, utilizando una paleta de colores claros y bordes suaves para inspirar confianza y profesionalismo en un público no técnico.
+- **Diseño Moderno, Claro y Elegante (Dark Mode)**: Construido con **Astro** y **Tailwind CSS**, utilizando una paleta de colores oscuros profundos y tarjetas translúcidas para inspirar confianza y profesionalismo sin fatigar la vista.
 - **Optimizado para SEO Local**: Cuenta con Schema de Negocio Local (JSON-LD), archivo `robots.txt` protegido, `sitemap` dinámico y meta tags Open Graph para un excelente posicionamiento en búsquedas locales.
 - **Secciones Especializadas**:
   - 📱 *Asesoría para celulares*: Orientación guiada para compras sin engaños.
@@ -50,7 +50,7 @@ El objetivo principal de este proyecto es demostrar que *"La tecnología no debe
 │   ├── lib/                # Configuración de InsForge, links a WA y lógica de Cotizaciones (IA)
 │   └── pages/              # Rutas de Astro (index de idiomas y panel privado /admin)
 ├── astro.config.mjs        # Configuración de Astro (integraciones)
-├── tailwind.config.mjs     # Paleta de colores "Light Mode" (Índigo y grises suaves)
+├── tailwind.config.mjs     # Paleta de colores "Dark Mode" (Negros profundos y acentos púrpura)
 └── package.json            # Dependencias
 ```
 
