@@ -1,0 +1,99 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { telegramLink } from "../../lib/telegram";
+
+const services = [
+  "Orientación para armar PC según presupuesto",
+  "Revisión de compatibilidad de componentes",
+  "Recomendación de procesador, tarjeta madre, RAM, SSD, fuente y gabinete",
+  "Mejora de RAM",
+  "Cambio o aumento de SSD",
+  "Revisión de laptops o PCs usadas",
+  "Instalación básica de software",
+  "Consejos para comprar en tiendas (DDTech, Amazon, Mercado Libre o Marketplace)"
+];
+
+const checklist = [
+  "Compatibilidad de tarjeta madre y procesador",
+  "Tipo y generación de RAM",
+  "Espacio para SSD",
+  "Fuente de poder suficiente",
+  "Tamaño del gabinete",
+  "Uso real: escuela, trabajo, gaming, edición o básico",
+  "Presupuesto total",
+  "Garantía de las piezas"
+];
+
+const tgHref = telegramLink('pc-build');
+---
+
+<section id="pc-builder" class="bg-surface py-24 border-t border-white/5">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Hardware y PCs"
+        title="Armar o mejorar PC"
+        subtitle="¿Quieres armar una PC o mejorar la que ya tienes? Te ayudo a revisar componentes, compatibilidad, presupuesto y qué mejora realmente te conviene."
+      />
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12">
+      <!-- Columna Izquierda: Servicios y Experiencia -->
+      <div class="reveal space-y-6">
+        <div class="card p-6 bg-background/50 border border-border">
+          <h3 class="text-xl font-bold mb-5 text-text-heading">Servicios incluidos</h3>
+          <ul class="space-y-3">
+            {services.map((service) => (
+              <li class="flex items-start gap-3">
+                <span class="text-primary mt-1 flex-shrink-0">✓</span>
+                <span class="text-text-body text-sm leading-relaxed">{service}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="card p-6 bg-primary/5 border border-primary/20">
+          <p class="text-sm text-text-heading italic leading-relaxed">
+            "Yo mismo armé una PC gamer comprando componentes y revisando compatibilidad. También mejoré una laptop usada aumentando RAM y almacenamiento."
+          </p>
+        </div>
+
+        <div class="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-5 flex gap-4 items-start">
+          <span class="text-2xl flex-shrink-0">⚠️</span>
+          <p class="text-sm text-yellow-500/90 font-medium leading-relaxed">
+            No vendo piezas directamente. Te ayudo a elegir mejor y evitar compras innecesarias o incompatibles.
+          </p>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Checklist y Botones -->
+      <div class="reveal" style="transition-delay: 0.2s">
+        <div class="card p-6 md:p-8 bg-gradient-to-b from-surface to-background border border-white/5">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="text-2xl">📋</span>
+            <h3 class="text-xl font-bold text-text-heading">Antes de comprar piezas, revisa esto</h3>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+            {checklist.map((item) => (
+              <div class="flex items-center gap-2 p-3 rounded-lg bg-surface/50 border border-white/5">
+                <span class="text-success flex-shrink-0">●</span>
+                <span class="text-sm text-text-body">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a href="#quote" onclick="document.getElementById('service_type').value='pc-build'" class="btn-primary flex items-center justify-center">
+              Cotizar mejora de PC
+            </a>
+            <a href={tgHref} target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center justify-center gap-2">
+              <svg class="w-5 h-5 text-[#229ED9]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+              Pedir asesoría por Telegram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

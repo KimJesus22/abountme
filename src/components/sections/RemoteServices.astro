@@ -1,0 +1,99 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { telegramLink } from "../../lib/telegram";
+
+const remoteServices = [
+  "Asesoría para comprar celular",
+  "Comparación de laptops o PCs",
+  "Revisión de publicaciones de Marketplace",
+  "Asesoría para componentes de PC",
+  "Dudas de software",
+  "Revisión de opciones de compra",
+  "Ayuda con Gmail, apps o configuraciones simples",
+  "Asesoría para páginas web",
+  "Cotización de menú digital o página web",
+  "Seguridad digital básica guiada"
+];
+
+const presencialServices = [
+  "Cambio físico de RAM o SSD",
+  "Limpieza física de equipos",
+  "Revisión de hardware dañado",
+  "Problemas de encendido",
+  "Instalaciones que requieren manipular el equipo",
+  "Fallas de pantalla, teclado, cargador o batería"
+];
+
+const tgHref = telegramLink();
+---
+
+<section id="remote-services" class="bg-background py-24">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge="Soporte Remoto"
+        title="También puedo ayudarte de forma remota"
+        subtitle="Si no estás en Jaral del Progreso, Valle de Santiago, Cortazar o Celaya, puedo revisar algunos casos de forma remota por WhatsApp, Telegram, videollamada o instrucciones paso a paso."
+      />
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
+      <!-- Tarjeta: Sí se puede remoto -->
+      <div class="reveal card p-6 md:p-8 bg-surface/30 border border-primary/20 hover:border-primary/50 transition-colors">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+          <div class="w-10 h-10 rounded-full bg-success/20 flex items-center justify-center text-success">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-text-heading">Sí se puede remoto</h3>
+        </div>
+        <ul class="space-y-3">
+          {remoteServices.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="text-success mt-1 flex-shrink-0 text-sm">●</span>
+              <span class="text-text-body text-sm leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Tarjeta: Mejor presencial -->
+      <div class="reveal card p-6 md:p-8 bg-surface/30 border border-white/5 hover:border-white/20 transition-colors" style="transition-delay: 0.1s">
+        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-white/5">
+          <div class="w-10 h-10 rounded-full bg-error/20 flex items-center justify-center text-error">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </div>
+          <h3 class="text-xl font-bold text-text-heading">Mejor presencial</h3>
+        </div>
+        <ul class="space-y-3">
+          {presencialServices.map((item) => (
+            <li class="flex items-start gap-3">
+              <span class="text-error/70 mt-1 flex-shrink-0 text-sm">●</span>
+              <span class="text-text-body text-sm leading-relaxed">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <!-- Aviso y Botones -->
+    <div class="reveal mt-12 max-w-3xl mx-auto" style="transition-delay: 0.2s">
+      <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-start gap-4 flex-1">
+          <span class="text-2xl flex-shrink-0 mt-1">ℹ️</span>
+          <p class="text-text-heading font-medium leading-relaxed">
+            No todos los problemas se pueden resolver a distancia. Si detecto que se necesita revisión física, te lo diré antes de avanzar.
+          </p>
+        </div>
+        <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto flex-shrink-0">
+          <a href="#quote" onclick="document.getElementById('attention_type').value='remote'" class="btn-primary flex items-center justify-center">
+            Solicitar apoyo remoto
+          </a>
+          <a href={tgHref} target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center justify-center gap-2">
+            <svg class="w-5 h-5 text-[#229ED9]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+            Cotizar por Telegram
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

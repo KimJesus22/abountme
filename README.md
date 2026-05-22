@@ -14,8 +14,12 @@ El objetivo principal de este proyecto es demostrar que *"La tecnología no debe
   - 📱 *Asesoría para celulares*: Orientación guiada para compras sin engaños.
   - 📋 *Checklist para elegir celular*: Guía visual y gratuita para evaluar opciones de equipos antes de comprar.
   - 🖥️ *Hardware y PCs*: Servicio de armado de equipos y mejora de laptops.
+  - 🛠️ *Armar o mejorar PC*: Orientación detallada para evitar compras incompatibles.
+  - 🤔 *Mándame tus opciones*: Revisión y comparación de productos antes de comprar.
+  - 🌐 *Servicios Remotos*: Asistencia a distancia para casos que no requieren revisión física.
   - 🏪 *Soluciones para Negocios*: Menús digitales, WhatsApp Business y páginas web sencillas.
   - 💼 *Proyectos y Casos Reales*: Secciones que validan experiencia práctica real (OXXO, Kioscos GTO, Ciber La Red, etc.) con ejemplos de equipos arreglados.
+  - ❓ *Preguntas Frecuentes (FAQ)*: Respuestas claras sobre alcance, costos y forma de trabajo.
 - **Formulario de Cotización Inteligente**: Permite solicitar presupuestos con feedback dinámico en tiempo real (precios estimados y avisos de viáticos) según el servicio y el tipo de atención solicitada.
 - **Preparado para IA (Futuro)**: Cuenta con arquitectura modular y tipos de TypeScript definidos en `src/lib/quotes/quoteService.ts` listos para inyectar modelos de lenguaje que ayuden a "pre-cotizar" automáticamente leyendo el problema del cliente.
 - **Panel de Administración Privado (`/admin`)**: 

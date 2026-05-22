@@ -1,0 +1,100 @@
+---
+import SectionHeading from "../ui/SectionHeading.astro";
+import { telegramLink } from "../../lib/telegram";
+import { whatsappLink } from "../../lib/whatsapp";
+
+const cases = [
+  "Estoy entre dos celulares",
+  "Vi una laptop usada en Marketplace",
+  "Quiero comprar una PC por partes",
+  "No sé si 128 GB me alcanzan",
+  "No sé si ese procesador es bueno",
+  "No sé si el precio es justo",
+  "No sé si se puede mejorar después"
+];
+
+const steps = [
+  { num: 1, text: "Me mandas capturas o links" },
+  { num: 2, text: "Me dices tu presupuesto" },
+  { num: 3, text: "Me dices para qué lo vas a usar" },
+  { num: 4, text: "Te explico cuál conviene y cuál evitar" }
+];
+
+const tgHref = telegramLink('review-options');
+const waHref = whatsappLink('Hola José, estoy revisando opciones para comprar y quiero que me ayudes a comparar:');
+---
+
+<section id="options-review" class="bg-primary/5 py-24 border-y border-primary/10">
+  <div class="section-container">
+    <div class="reveal max-w-4xl mx-auto text-center">
+      <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-bold mb-6 text-text-heading leading-tight">
+        Mándame tus opciones <br class="hidden sm:block" />
+        <span class="text-primary text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">y te digo cuál conviene</span>
+      </h2>
+      <p class="text-lg text-text-body leading-relaxed max-w-2xl mx-auto mb-10">
+        ¿Estás entre varios celulares, laptops o componentes? Mándame tus opciones y te ayudo a revisar cuál conviene más según tu presupuesto y uso.
+      </p>
+    </div>
+
+    <div class="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 mt-12">
+      <!-- Izquierda: Casos comunes -->
+      <div class="reveal lg:col-span-5 space-y-6">
+        <h3 class="text-xl font-bold text-text-heading px-2">¿Te suena familiar?</h3>
+        <div class="flex flex-wrap gap-3">
+          {cases.map((item, i) => (
+            <div 
+              class="px-4 py-2.5 rounded-full bg-surface/50 border border-white/5 text-sm text-text-body font-medium shadow-sm hover:border-primary/30 transition-colors"
+              style={`animation: float 4s ease-in-out infinite; animation-delay: ${i * 0.2}s`}
+            >
+              "{item}"
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- Derecha: Pasos, Aviso y Botones -->
+      <div class="reveal lg:col-span-7" style="transition-delay: 0.2s">
+        <div class="card p-6 md:p-8 bg-surface border border-primary/20 shadow-xl shadow-primary/5">
+          <h3 class="text-xl font-bold text-text-heading mb-6 border-b border-border/50 pb-4">¿Cómo funciona?</h3>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-5 mb-8">
+            {steps.map((step) => (
+              <div class="flex items-start gap-3">
+                <div class="w-8 h-8 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm flex-shrink-0">
+                  {step.num}
+                </div>
+                <p class="text-text-heading text-[0.95rem] leading-tight mt-1">{step.text}</p>
+              </div>
+            ))}
+          </div>
+
+          <div class="bg-background rounded-xl p-5 mb-8 border border-white/5 flex gap-4 items-start">
+            <span class="text-2xl flex-shrink-0 mt-0.5">⚠️</span>
+            <p class="text-sm text-text-body leading-relaxed">
+              <strong class="text-text-heading">Aviso:</strong> Esta revisión puede tener costo dependiendo del nivel de detalle. Primero te digo si es una duda rápida o si requiere asesoría completa.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-4 pt-2">
+            <a href={tgHref} target="_blank" rel="noopener noreferrer" class="btn-primary flex items-center justify-center gap-2 flex-1 shadow-lg shadow-primary/20 hover:-translate-y-0.5 transition-transform">
+              <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.94z"/></svg>
+              Enviar opciones por Telegram
+            </a>
+            <a href={waHref} target="_blank" rel="noopener noreferrer" class="btn-secondary flex items-center justify-center gap-2 flex-1 hover:-translate-y-0.5 transition-transform">
+              <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Enviar por WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
+    100% { transform: translateY(0px); }
+  }
+</style>

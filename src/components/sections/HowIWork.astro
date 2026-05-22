@@ -1,0 +1,77 @@
+---
+import { useTranslations } from "../../i18n/utils";
+import type { Lang } from "../../i18n/ui";
+import SectionHeading from "../ui/SectionHeading.astro";
+
+interface Props { lang?: Lang; }
+const { lang = "en" } = Astro.props;
+const t = useTranslations(lang);
+
+const steps = [
+  { num: 1, icon: "💬", titleKey: "howwork.1.title", descKey: "howwork.1.desc" },
+  { num: 2, icon: "🔍", titleKey: "howwork.2.title", descKey: "howwork.2.desc" },
+  { num: 3, icon: "💡", titleKey: "howwork.3.title", descKey: "howwork.3.desc" },
+  { num: 4, icon: "⚙️", titleKey: "howwork.4.title", descKey: "howwork.4.desc" },
+  { num: 5, icon: "✅", titleKey: "howwork.5.title", descKey: "howwork.5.desc" },
+];
+---
+
+<section id="how-i-work" class="bg-surface">
+  <div class="section-container">
+    <div class="reveal">
+      <SectionHeading
+        badge={t("howwork.badge")}
+        title={t("howwork.title")}
+        subtitle={t("howwork.subtitle")}
+      />
+    </div>
+
+    <div class="max-w-3xl mx-auto mt-12">
+      <div class="relative">
+        <!-- Vertical connector line -->
+        <div class="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/40 to-transparent"></div>
+
+        {steps.map((step, i) => (
+          <div class="reveal flex gap-5 md:gap-6 mb-10 last:mb-0 group" style={`transition-delay: ${i * 0.1}s`}>
+            <!-- Step number circle -->
+            <div class="relative z-10 flex-shrink-0">
+              <div class="w-12 h-12 md:w-16 md:h-16 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center shadow-sm group-hover:bg-primary/20 group-hover:border-primary/50 group-hover:scale-110 transition-all duration-300">
+                <span class="text-primary font-bold text-lg md:text-xl">{step.num}</span>
+              </div>
+            </div>
+
+            <!-- Content card -->
+            <div class="card card-hover p-5 md:p-6 flex-1 border border-white/5 bg-gradient-to-b from-surface/40 to-surface-dim hover:border-primary/30">
+              <div class="flex items-center gap-3 mb-2">
+                <span class="text-xl">{step.icon}</span>
+                <h3 class="font-display font-semibold text-lg text-text-heading">
+                  {t(step.titleKey as any)}
+                </h3>
+              </div>
+              <p class="text-sm text-text-body leading-relaxed">
+                {t(step.descKey as any)}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Honesty phrase -->
+      <div class="reveal mt-12" style="transition-delay: 0.5s">
+        <div class="bg-primary/5 border border-primary/20 rounded-2xl p-6 flex items-start gap-4">
+          <div class="text-2xl flex-shrink-0">🤝</div>
+          <p class="text-text-heading font-medium leading-relaxed">
+            {t("howwork.honesty")}
+          </p>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="mt-10 text-center reveal" style="transition-delay: 0.6s">
+        <a href="#quote" class="btn-primary">
+          {t("howwork.cta")}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
