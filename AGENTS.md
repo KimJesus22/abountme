@@ -178,3 +178,4 @@ const { error } = await insforge.database.from('table').delete().eq('id', value)
 - **i18n**: Custom system in `src/i18n/` (en, es, ko, ja)
 - **Admin panel**: `/admin` (private, uses InsForge Auth, NOT in navbar)
 - **WhatsApp helper**: `src/lib/whatsapp.ts` (centralized number + messages)
+- **PowerShell / Terminal**: When running multiple commands in PowerShell (Windows), always use `;` as a separator instead of `&&`. The `&&` operator is not supported in the user's version of PowerShell.

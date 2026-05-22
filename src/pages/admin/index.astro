@@ -265,6 +265,15 @@ import { serviceChecklists } from '../../data/checklists';
       });
 
       const result = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        await insforge.auth.signOut();
+        dashboardContainer.classList.add('hidden');
+        authContainer.classList.remove('hidden');
+        loginError.textContent = 'Tu sesión expiró. Inicia sesión nuevamente.';
+        loginError.classList.remove('hidden');
+        return;
+      }
+
       if (!response.ok) {
         throw new Error(result.error || 'No se pudieron cargar las cotizaciones.');
       }

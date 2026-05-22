@@ -57,12 +57,7 @@ export const GET: APIRoute = async ({ request }) => {
     return jsonResponse({ error: 'Unauthorized' }, 401);
   }
 
-  const dataClient = createClient({
-    baseUrl: insforgeUrl,
-    anonKey: insforgeAnonKey,
-  });
-
-  const { data, error } = await dataClient.database
+  const { data, error } = await adminClient.database
     .from('quotes')
     .select('*')
     .order('created_at', { ascending: false });
