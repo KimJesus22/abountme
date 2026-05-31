@@ -1,35 +1,88 @@
 ---
 import MainLayout from '../../layouts/MainLayout.astro';
 import PageHero from '../../components/ui/PageHero.astro';
-import Experience from '../../components/sections/Experience.astro';
-import Testimonials from '../../components/sections/Testimonials.astro';
-import PageCTA from '../../components/ui/PageCTA.astro';
 
 const lang = 'es';
+const geckRepo = 'https://github.com/KimJesus22/GECK';
+
+const caseFacts = [
+  { label: 'Tipo', value: 'Proyecto web para clienta' },
+  { label: 'Estado', value: 'Realizado' },
+  { label: 'Inversión', value: '$1,600 MXN' },
+  { label: 'Repositorio', value: 'Público con autorización' },
+  { label: 'Reseña', value: 'Pendiente' },
+];
 ---
 
 <MainLayout
   lang={lang}
   title="Casos reales | JC21 Labs"
-  description="Experiencia real atendiendo personas, negocios y problemas tecnologicos."
+  description="Trabajos reales realizados para personas o clientes, separados de los proyectos personales."
 >
   <PageHero
-    badge="Casos reales"
-    title="Trabajos y experiencia con personas reales"
-    subtitle="Aqui junto experiencia de campo, atencion local, soporte y proyectos que muestran mi forma de trabajar."
+    badge="Clientes"
+    title="Casos reales"
+    subtitle="Aquí muestro proyectos realizados para personas reales o clientes, explicando qué necesitaban, qué se construyó y qué aprendí en el proceso."
   />
-  <section class="bg-surface">
-    <div class="section-container py-12">
-      <a href="/casos-reales/geck" class="card card-hover p-6 block max-w-2xl">
-        <p class="section-badge mb-4">Caso destacado</p>
-        <h2 class="text-2xl font-bold text-text-heading mb-3">GECK</h2>
-        <p class="text-text-body leading-relaxed">
-          Caso real documentado como ejemplo de trabajo aplicado, organizacion de necesidades y solucion tecnologica.
+
+  <section class="bg-surface border-y border-border">
+    <div class="section-container py-10 md:py-12">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-3xl border border-border bg-background p-6">
+        <p class="text-text-heading font-medium">
+          ¿Quieres ver mis proyectos personales y técnicos?
         </p>
-      </a>
+        <a href="/proyectos" class="btn-secondary">Ver proyectos</a>
+      </div>
     </div>
   </section>
-  <Experience lang={lang} />
-  <Testimonials />
-  <PageCTA />
+
+  <section class="bg-background">
+    <div class="section-container pt-0">
+      <div class="max-w-4xl">
+        <article class="card p-6 md:p-8">
+          <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div class="max-w-2xl">
+              <p class="section-badge mb-4">Caso realizado</p>
+              <h2 class="text-2xl md:text-3xl font-bold text-text-heading">
+                GECK — Plataforma para capacitación de personal
+              </h2>
+              <p class="mt-4 text-text-body leading-relaxed">
+                Página web sencilla para una clienta real, creada para subir archivos y apoyar la capacitación de personal dentro de una empresa.
+              </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row lg:flex-col gap-3 lg:min-w-56">
+              <a href="/casos-reales/geck" class="btn-primary">Ver caso completo</a>
+              <a href={geckRepo} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+                Ver repositorio
+              </a>
+            </div>
+          </div>
+
+          <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+            {caseFacts.map((fact) => (
+              <div class="rounded-2xl border border-border bg-background p-4">
+                <p class="text-xs uppercase tracking-wider text-text/60">{fact.label}</p>
+                <p class="mt-2 text-sm font-semibold text-text-heading">{fact.value}</p>
+              </div>
+            ))}
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface border-t border-border">
+    <div class="section-container py-14 md:py-16">
+      <div class="max-w-3xl rounded-3xl border border-border bg-background p-6 md:p-8">
+        <p class="section-badge mb-4">Más adelante</p>
+        <h2 class="text-2xl md:text-3xl font-bold text-text-heading">
+          Próximamente agregaré más casos reales conforme trabaje con nuevos clientes.
+        </h2>
+        <p class="mt-4 text-text-body leading-relaxed">
+          Esta sección está separada del portafolio personal para mostrar solamente trabajos realizados para personas reales o clientes.
+        </p>
+      </div>
+    </div>
+  </section>
 </MainLayout>

@@ -48,7 +48,11 @@ const projects = [
 <section id="projects" class="bg-background py-24">
   <div class="section-container">
     <div class="reveal">
-      <SectionHeading badge={t('projects.badge')} title={t('projects.title')} subtitle={t('projects.subtitle')} />
+      <SectionHeading
+        badge="Proyectos personales"
+        title="Demos, prácticas y experimentos técnicos"
+        subtitle="No son productos comerciales ni casos de clientes: son proyectos para practicar, aprender y mostrar mi proceso técnico."
+      />
     </div>
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 mt-12">
       {projects.map((proj, i) => (

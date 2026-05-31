@@ -10,13 +10,23 @@ const lang = 'es';
 <MainLayout
   lang={lang}
   title="Proyectos | JC21 Labs"
-  description="Portafolio de proyectos propios de Jose de Jesus Ceron."
+  description="Proyectos personales, demos, experimentos y practicas de Jose de Jesus Ceron."
 >
   <PageHero
     badge="Portafolio"
-    title="Proyectos propios"
-    subtitle="Una vista de proyectos que he construido para practicar, aprender y aplicar tecnologia a ideas reales."
+    title="Proyectos personales y de aprendizaje"
+    subtitle="Estos proyectos son prácticas, demos o prototipos que he construido para aprender, experimentar y mejorar mis habilidades. Algunos fueron desarrollados con apoyo de herramientas de IA, pero revisados, adaptados y organizados por mí."
   />
+  <section class="bg-surface border-y border-border">
+    <div class="section-container py-10 md:py-12">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 rounded-3xl border border-border bg-background p-6">
+        <p class="text-text-heading font-medium">
+          ¿Quieres ver trabajos realizados para clientes?
+        </p>
+        <a href="/casos-reales" class="btn-secondary">Ver casos reales</a>
+      </div>
+    </div>
+  </section>
   <Projects lang={lang} />
   <PageCTA title="Quieres construir algo parecido?" />
 </MainLayout>
