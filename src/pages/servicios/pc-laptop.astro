@@ -1,0 +1,29 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import FeatureGrid from '../../components/ui/FeatureGrid.astro';
+import Hardware from '../../components/sections/Hardware.astro';
+import PCBuilder from '../../components/sections/PCBuilder.astro';
+import OptionsReview from '../../components/sections/OptionsReview.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+import { pcFeatures } from '../../data/servicePages';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="PC y Laptop | JC21 Labs"
+  description="Armado de PC, mejoras de laptop, RAM, SSD, almacenamiento, componentes y revision de equipos usados."
+>
+  <PageHero
+    badge="PC / Laptop"
+    title="Armado, mejora y revision de equipos"
+    subtitle="Antes de comprar piezas o una laptop usada, revisamos compatibilidad, presupuesto, uso real y si la inversion realmente conviene."
+  />
+  <FeatureGrid title="Servicios para PC y laptop" features={pcFeatures} />
+  <Hardware lang={lang} />
+  <PCBuilder />
+  <OptionsReview />
+  <PageCTA title="Tienes dudas sobre una PC o laptop?" />
+</MainLayout>

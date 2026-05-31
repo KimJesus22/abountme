@@ -1,0 +1,32 @@
+---
+import { telegramBotLink } from '../../lib/telegram/botLink';
+import { whatsappLink, waMessages } from '../../lib/whatsapp';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Quieres que revise tu caso?',
+  description = 'Cuéntame qué necesitas y te digo si conviene resolverlo remoto, presencial o con una cotización más detallada.',
+} = Astro.props;
+
+const waHref = whatsappLink(waMessages.general);
+---
+
+<section class="bg-primary/5 border-y border-primary/10">
+  <div class="section-container py-14 md:py-16">
+    <div class="flex flex-col lg:flex-row gap-6 lg:items-center lg:justify-between">
+      <div class="max-w-2xl">
+        <h2 class="text-2xl md:text-3xl font-bold text-text-heading">{title}</h2>
+        <p class="mt-3 text-text-body leading-relaxed">{description}</p>
+      </div>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <a href="/cotizar" class="btn-primary">Cotizar</a>
+        <a href={waHref} target="_blank" rel="noopener noreferrer" class="btn-secondary">WhatsApp</a>
+        <a href={telegramBotLink} target="_blank" rel="noopener noreferrer" class="btn-secondary">Telegram</a>
+      </div>
+    </div>
+  </div>
+</section>

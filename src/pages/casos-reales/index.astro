@@ -1,0 +1,35 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import Experience from '../../components/sections/Experience.astro';
+import Testimonials from '../../components/sections/Testimonials.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Casos reales | JC21 Labs"
+  description="Experiencia real atendiendo personas, negocios y problemas tecnologicos."
+>
+  <PageHero
+    badge="Casos reales"
+    title="Trabajos y experiencia con personas reales"
+    subtitle="Aqui junto experiencia de campo, atencion local, soporte y proyectos que muestran mi forma de trabajar."
+  />
+  <section class="bg-surface">
+    <div class="section-container py-12">
+      <a href="/casos-reales/geck" class="card card-hover p-6 block max-w-2xl">
+        <p class="section-badge mb-4">Caso destacado</p>
+        <h2 class="text-2xl font-bold text-text-heading mb-3">GECK</h2>
+        <p class="text-text-body leading-relaxed">
+          Caso real documentado como ejemplo de trabajo aplicado, organizacion de necesidades y solucion tecnologica.
+        </p>
+      </a>
+    </div>
+  </section>
+  <Experience lang={lang} />
+  <Testimonials />
+  <PageCTA />
+</MainLayout>

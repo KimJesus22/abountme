@@ -1,0 +1,25 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import FeatureGrid from '../../components/ui/FeatureGrid.astro';
+import BusinessSolutions from '../../components/sections/BusinessSolutions.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+import { businessFeatures } from '../../data/servicePages';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Digitalizacion para negocios | JC21 Labs"
+  description="WhatsApp Business, QR, Google Maps, catalogos y menus digitales para negocios pequenos."
+>
+  <PageHero
+    badge="Negocios"
+    title="Digitalizacion para negocios pequenos"
+    subtitle="Te ayudo a que tu negocio tenga presencia mas clara: WhatsApp Business, QR, Google Maps, catalogo, menu digital y pagina sencilla."
+  />
+  <FeatureGrid title="Soluciones para negocios" features={businessFeatures} />
+  <BusinessSolutions />
+  <PageCTA title="Quieres digitalizar tu negocio?" />
+</MainLayout>

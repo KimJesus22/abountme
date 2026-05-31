@@ -1,0 +1,55 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+
+const lang = 'es';
+
+const points = [
+  'Entender la necesidad antes de proponer tecnologia.',
+  'Ordenar la informacion importante del proyecto.',
+  'Definir una solucion clara, mantenible y facil de explicar.',
+  'Priorizar comunicacion simple para que el cliente entienda cada paso.',
+];
+---
+
+<MainLayout
+  lang={lang}
+  title="Caso real GECK | JC21 Labs"
+  description="Caso real del proyecto GECK."
+>
+  <PageHero
+    badge="Caso real"
+    title="GECK"
+    subtitle="Ejemplo de proyecto trabajado con enfoque practico: entender el problema, organizar la informacion y construir una solucion clara."
+  />
+  <section class="bg-background">
+    <div class="section-container">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <article class="lg:col-span-2 card p-6 md:p-8">
+          <h2 class="text-2xl font-bold text-text-heading mb-4">Resumen del caso</h2>
+          <div class="space-y-4 text-text-body leading-relaxed">
+            <p>
+              GECK se presenta como un caso real para mostrar como documento y explico un trabajo tecnologico sin prometer soluciones magicas.
+            </p>
+            <p>
+              La idea es partir de una necesidad concreta, separar lo importante de lo accesorio y avanzar con una solucion que la persona pueda entender.
+            </p>
+          </div>
+        </article>
+        <aside class="card p-6 md:p-8">
+          <h2 class="text-xl font-bold text-text-heading mb-5">Enfoque</h2>
+          <ul class="space-y-3">
+            {points.map((point) => (
+              <li class="flex gap-3 text-sm text-text-body">
+                <span class="text-primary">✓</span>
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <PageCTA title="Quieres documentar o construir un proyecto?" />
+</MainLayout>

@@ -1,0 +1,22 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import QuoteForm from '../components/sections/QuoteForm.astro';
+import Contact from '../components/sections/Contact.astro';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Cotizar | JC21 Labs"
+  description="Formulario de cotizacion para servicios de tecnologia, soporte, web y negocios."
+>
+  <PageHero
+    badge="Cotizacion"
+    title="Cuéntame que necesitas"
+    subtitle="Llena el formulario con los datos principales. Si hace falta, te contacto para pedir detalles antes de darte una respuesta."
+  />
+  <QuoteForm lang={lang} />
+  <Contact lang={lang} />
+</MainLayout>

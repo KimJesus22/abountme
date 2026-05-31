@@ -1,0 +1,29 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import FeatureGrid from '../../components/ui/FeatureGrid.astro';
+import PhoneAdvice from '../../components/sections/PhoneAdvice.astro';
+import PhoneChecklist from '../../components/sections/PhoneChecklist.astro';
+import OptionsReview from '../../components/sections/OptionsReview.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+import { phoneFeatures } from '../../data/servicePages';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Servicios para celulares | JC21 Labs"
+  description="Asesoria para comprar celular, configurar equipos nuevos y revisar celulares usados."
+>
+  <PageHero
+    badge="Celulares"
+    title="Asesoria y configuracion de celulares"
+    subtitle="Te ayudo a comprar mejor, configurar tu equipo y entender RAM, almacenamiento, procesador, bateria y garantia sin tecnicismos innecesarios."
+  />
+  <FeatureGrid title="Que puedo revisar contigo" features={phoneFeatures} />
+  <PhoneAdvice />
+  <PhoneChecklist />
+  <OptionsReview />
+  <PageCTA title="Quieres revisar un celular?" />
+</MainLayout>

@@ -1,0 +1,28 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import ServiceLinks from '../../components/ui/ServiceLinks.astro';
+import Services from '../../components/sections/Services.astro';
+import Pricing from '../../components/sections/Pricing.astro';
+import RemoteServices from '../../components/sections/RemoteServices.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Servicios | JC21 Labs"
+  description="Servicios de tecnologia para personas y negocios: celulares, PC, laptops, paginas web y digitalizacion."
+>
+  <PageHero
+    badge="Servicios"
+    title="Servicios de tecnologia claros y practicos"
+    subtitle="Elige el area que se parece mas a lo que necesitas. Si no estas seguro, puedes cotizar y te ayudo a ubicar el servicio correcto."
+  />
+  <ServiceLinks />
+  <Services lang={lang} />
+  <RemoteServices />
+  <Pricing lang={lang} />
+  <PageCTA />
+</MainLayout>

@@ -1,0 +1,38 @@
+---
+const services = [
+  {
+    href: '/servicios/celulares',
+    title: 'Celulares',
+    description: 'Compra, configuracion y revision de celulares nuevos o usados.',
+  },
+  {
+    href: '/servicios/pc-laptop',
+    title: 'PC / Laptop',
+    description: 'Armado, mejoras, RAM, SSD y compatibilidad de componentes.',
+  },
+  {
+    href: '/servicios/paginas-web',
+    title: 'Paginas web',
+    description: 'Sitios sencillos, menus digitales, portafolios y proyectos personalizados.',
+  },
+  {
+    href: '/servicios/negocios',
+    title: 'Negocios pequenos',
+    description: 'WhatsApp Business, QR, Google Maps, catalogo y menu digital.',
+  },
+];
+---
+
+<section class="bg-surface">
+  <div class="section-container">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      {services.map((service) => (
+        <a href={service.href} class="card card-hover p-6 block">
+          <h2 class="text-xl font-bold text-text-heading mb-3">{service.title}</h2>
+          <p class="text-sm leading-relaxed text-text-body mb-5">{service.description}</p>
+          <span class="text-sm font-semibold text-primary">Ver servicio</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

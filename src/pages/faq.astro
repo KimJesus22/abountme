@@ -1,0 +1,20 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import FAQ from '../components/sections/FAQ.astro';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Preguntas frecuentes | JC21 Labs"
+  description="Dudas frecuentes sobre servicios, cobertura, costos y forma de trabajo."
+>
+  <PageHero
+    badge="FAQ"
+    title="Preguntas frecuentes"
+    subtitle="Respuestas claras sobre lo que puedo revisar, como trabajo, cobertura y cuando conviene pedir una cotizacion."
+  />
+  <FAQ lang={lang} />
+</MainLayout>

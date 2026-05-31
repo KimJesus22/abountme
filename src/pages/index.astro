@@ -2,13 +2,9 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import Hero from '../components/sections/Hero.astro';
 import Services from '../components/sections/Services.astro';
-import Pricing from '../components/sections/Pricing.astro';
+import ServiceLinks from '../components/ui/ServiceLinks.astro';
 import Projects from '../components/sections/Projects.astro';
-import About from '../components/sections/About.astro';
-import Experience from '../components/sections/Experience.astro';
-import HowIWork from '../components/sections/HowIWork.astro';
-import ServiceAreas from '../components/sections/ServiceAreas.astro';
-import FAQ from '../components/sections/FAQ.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
 import QuoteForm from '../components/sections/QuoteForm.astro';
 import Contact from '../components/sections/Contact.astro';
 
@@ -21,14 +17,10 @@ const lang = 'en';
   description="Technology solutions for people and small businesses. Tech support, websites, digital security, and more. From Jaral del Progreso to all of Mexico."
 >
   <Hero lang={lang} />
+  <ServiceLinks />
   <Services lang={lang} />
-  <Pricing lang={lang} />
   <Projects lang={lang} />
-  <About lang={lang} />
-  <Experience lang={lang} />
-  <HowIWork lang={lang} />
-  <ServiceAreas lang={lang} />
-  <FAQ lang={lang} />
+  <Testimonials />
   <QuoteForm lang={lang} />
   <Contact lang={lang} />
 </MainLayout>

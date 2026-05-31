@@ -1,0 +1,25 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import PageHero from '../../components/ui/PageHero.astro';
+import FeatureGrid from '../../components/ui/FeatureGrid.astro';
+import Projects from '../../components/sections/Projects.astro';
+import PageCTA from '../../components/ui/PageCTA.astro';
+import { webFeatures } from '../../data/servicePages';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Paginas web | JC21 Labs"
+  description="Paginas web sencillas, menus digitales, portafolios y proyectos personalizados."
+>
+  <PageHero
+    badge="Paginas web"
+    title="Paginas web sencillas y proyectos personalizados"
+    subtitle="Sitios claros para negocios, servicios, portafolios, menus digitales o ideas pequenas que necesitan verse profesionales en internet."
+  />
+  <FeatureGrid title="Tipos de proyectos web" features={webFeatures} />
+  <Projects lang={lang} />
+  <PageCTA title="Quieres una pagina web sencilla?" />
+</MainLayout>

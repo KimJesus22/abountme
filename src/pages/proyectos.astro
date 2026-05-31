@@ -1,0 +1,22 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import Projects from '../components/sections/Projects.astro';
+import PageCTA from '../components/ui/PageCTA.astro';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Proyectos | JC21 Labs"
+  description="Portafolio de proyectos propios de Jose de Jesus Ceron."
+>
+  <PageHero
+    badge="Portafolio"
+    title="Proyectos propios"
+    subtitle="Una vista de proyectos que he construido para practicar, aprender y aplicar tecnologia a ideas reales."
+  />
+  <Projects lang={lang} />
+  <PageCTA title="Quieres construir algo parecido?" />
+</MainLayout>

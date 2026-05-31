@@ -1,0 +1,26 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+import PageHero from '../components/ui/PageHero.astro';
+import About from '../components/sections/About.astro';
+import HowIWork from '../components/sections/HowIWork.astro';
+import ServiceAreas from '../components/sections/ServiceAreas.astro';
+import PageCTA from '../components/ui/PageCTA.astro';
+
+const lang = 'es';
+---
+
+<MainLayout
+  lang={lang}
+  title="Sobre mi | JC21 Labs"
+  description="Historia, experiencia y confianza local de Jose de Jesus Ceron."
+>
+  <PageHero
+    badge="Sobre mi"
+    title="Tecnologia explicada con paciencia"
+    subtitle="Mi experiencia viene de atender personas reales, equipos reales y dudas reales en Jaral del Progreso y la zona."
+  />
+  <About lang={lang} />
+  <HowIWork lang={lang} />
+  <ServiceAreas lang={lang} />
+  <PageCTA />
+</MainLayout>
