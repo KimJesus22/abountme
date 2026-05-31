@@ -60,6 +60,37 @@ El objetivo principal de este proyecto es demostrar que *"La tecnología no debe
 └── package.json            # Dependencias
 ```
 
+### Rutas principales del sitio
+
+El proyecto ya no funciona como una sola landing larga. La home `/` es un resumen principal y el contenido completo vive en rutas internas:
+
+```text
+/                         # Home resumida
+/servicios                 # Vista general de servicios
+/servicios/celulares       # Asesoría y revisión de celulares
+/servicios/pc-laptop       # Armado, mejoras y revisión de PC/laptop
+/servicios/paginas-web     # Páginas web sencillas y proyectos personalizados
+/servicios/negocios        # Digitalización para negocios pequeños
+/proyectos                 # Portafolio de proyectos propios
+/casos-reales              # Experiencia y trabajos realizados
+/casos-reales/geck         # Caso real GECK
+/cotizar                   # Formulario de cotización
+/sobre-mi                  # Historia, experiencia y confianza local
+/faq                       # Preguntas frecuentes
+```
+
+La navegación principal (`Navbar`) y el footer apuntan a estas rutas reales. Los botones flotantes de WhatsApp y Telegram se mantienen globales desde `MainLayout.astro`.
+
+### Caso real GECK
+
+`/casos-reales/geck` documenta el primer proyecto pagado para una clienta real:
+
+- **Proyecto**: GECK — Plataforma sencilla para capacitación de personal.
+- **Objetivo**: página web sencilla para carga y consulta de archivos relacionados con capacitación.
+- **Costo cobrado**: `$1,600 MXN`.
+- **Repositorio público autorizado**: [KimJesus22/GECK](https://github.com/KimJesus22/GECK).
+- **Reseña**: la página deja un bloque preparado con el texto honesto `Reseña pendiente de autorización/publicación.`
+
 ---
 
 ## ⚙️ Configuración y Desarrollo Local

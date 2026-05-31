@@ -1,26 +1,152 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import Hero from '../components/sections/Hero.astro';
-import Services from '../components/sections/Services.astro';
-import ServiceLinks from '../components/ui/ServiceLinks.astro';
-import Projects from '../components/sections/Projects.astro';
-import Testimonials from '../components/sections/Testimonials.astro';
-import QuoteForm from '../components/sections/QuoteForm.astro';
-import Contact from '../components/sections/Contact.astro';
+import { telegramBotLink } from '../lib/telegram/botLink';
 
-const lang = 'en';
+const lang = 'es';
+
+const services = [
+  {
+    title: 'Celulares',
+    description: 'Asesoria para comprar, configurar o revisar celulares nuevos y usados.',
+    href: '/servicios/celulares',
+  },
+  {
+    title: 'PC / Laptop',
+    description: 'Armado, mejoras con RAM o SSD, revision de equipos usados y compatibilidad.',
+    href: '/servicios/pc-laptop',
+  },
+  {
+    title: 'Paginas web',
+    description: 'Paginas sencillas, menus digitales, portafolios y proyectos personalizados.',
+    href: '/servicios/paginas-web',
+  },
+  {
+    title: 'Negocios digitales',
+    description: 'WhatsApp Business, QR, Google Maps, catalogos y menus digitales.',
+    href: '/servicios/negocios',
+  },
+];
+
+const trustItems = [
+  'Ciber La Red',
+  'OXXO / Kioscos Digitales GTO',
+  'Soporte presencial y remoto',
+  'Jaral del Progreso y alrededores',
+];
 ---
 
-<MainLayout 
+<MainLayout
   lang={lang}
-  title="JC21 Labs — Clear Technology for Real People and Businesses"
-  description="Technology solutions for people and small businesses. Tech support, websites, digital security, and more. From Jaral del Progreso to all of Mexico."
+  title="José de Jesús Cerón López | JC21 Labs"
+  description="Tecnología clara para personas y negocios reales. Servicios de celulares, PC, paginas web y digitalizacion para negocios pequeños."
 >
-  <Hero lang={lang} />
-  <ServiceLinks />
-  <Services lang={lang} />
-  <Projects lang={lang} />
-  <Testimonials />
-  <QuoteForm lang={lang} />
-  <Contact lang={lang} />
+  <section class="bg-background pt-32 md:pt-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div class="lg:col-span-7">
+          <p class="section-badge mb-5">JC21 Labs</p>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-display font-bold leading-tight text-text-heading">
+            José de Jesús Cerón López
+          </h1>
+          <p class="mt-5 text-2xl md:text-3xl font-display font-semibold text-primary leading-snug">
+            Tecnología clara para personas y negocios reales
+          </p>
+          <p class="mt-6 max-w-2xl text-lg leading-relaxed text-text-body">
+            Soy estudiante de Ingeniería en Sistemas en UTEL. Ayudo a personas y negocios pequeños a resolver problemas tecnológicos, elegir mejor sus dispositivos, configurar herramientas digitales y crear páginas web sencillas.
+          </p>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-3">
+            <a href="/servicios" class="btn-primary">Ver servicios</a>
+            <a href="/cotizar" class="btn-secondary">Solicitar cotización</a>
+            <a href={telegramBotLink} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+              Hablar por Telegram
+            </a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative mx-auto max-w-sm">
+            <div class="aspect-square overflow-hidden rounded-3xl border border-border bg-surface shadow-xl">
+              <img src="/perfil.jpg" alt="José de Jesús Cerón López" class="h-full w-full object-cover" />
+            </div>
+            <div class="absolute -bottom-5 left-5 right-5 rounded-2xl border border-border bg-surface/95 p-4 shadow-lg backdrop-blur">
+              <p class="text-sm font-semibold text-text-heading">Soporte, asesoría y web sencilla</p>
+              <p class="mt-1 text-xs leading-relaxed text-text-body">Atención local y remota con explicación clara.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface">
+    <div class="section-container">
+      <div class="mb-10 max-w-2xl">
+        <p class="section-badge mb-4">Servicios destacados</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-text-heading">Elige por dónde empezar</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        {services.map((service) => (
+          <a href={service.href} class="card card-hover p-6 block">
+            <h3 class="text-xl font-bold text-text-heading mb-3">{service.title}</h3>
+            <p class="text-sm leading-relaxed text-text-body mb-5">{service.description}</p>
+            <span class="text-sm font-semibold text-primary">Ver detalles</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-background">
+    <div class="section-container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-center">
+        <div class="lg:col-span-5">
+          <p class="section-badge mb-4">Caso real destacado</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-text-heading">GECK</h2>
+        </div>
+        <div class="lg:col-span-7 card p-6 md:p-8">
+          <p class="text-lg leading-relaxed text-text-body">
+            Página web sencilla para capacitación de personal, con carga de archivos, realizada para una clienta real.
+          </p>
+          <a href="/casos-reales/geck" class="btn-primary mt-6">Ver caso GECK</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-surface">
+    <div class="section-container">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:items-start">
+        <div class="lg:col-span-5">
+          <p class="section-badge mb-4">Confianza local</p>
+          <h2 class="text-3xl md:text-4xl font-bold text-text-heading">Experiencia atendiendo personas reales</h2>
+        </div>
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {trustItems.map((item) => (
+            <div class="rounded-2xl border border-border bg-background p-5">
+              <span class="text-sm font-semibold text-primary">✓</span>
+              <p class="mt-2 font-medium text-text-heading">{item}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bg-primary/5 border-y border-primary/10">
+    <div class="section-container py-16 md:py-20">
+      <div class="max-w-3xl">
+        <h2 class="text-3xl md:text-4xl font-bold text-text-heading">
+          ¿Necesitas ayuda con tecnología o una página web?
+        </h2>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="/cotizar" class="btn-primary">Cotizar ahora</a>
+          <a href={telegramBotLink} target="_blank" rel="noopener noreferrer" class="btn-secondary">
+            Abrir bot de Telegram
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
 </MainLayout>
